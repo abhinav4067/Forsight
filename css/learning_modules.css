@@ -1,0 +1,213 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body, html {
+  font-family: 'Segoe UI', sans-serif;
+  scroll-behavior: smooth;
+  background-color: #000;
+  color: white;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+
+  background: rgba(0, 0, 0, 0.1);
+  /* backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+   mix-blend-mode: difference;  */
+  color: white;
+}
+
+
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+/* .nav-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+} */
+
+/* Hamburger Icon */
+.menu-icon {
+  display: none;
+  font-size: 1.8rem;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.menu-toggle,
+.close-icon {
+  display: none;
+}
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .close-icon {
+    display: block;
+    font-size: 1.8rem;
+    text-align: right;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: white;
+  }
+}
+.nav-links a {
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+.nav-links a:hover {
+  color: #a2d2ff;
+}
+.nav-links .enroll {
+  background: #a855f7;
+  padding: 8px 16px;
+  border-radius: 5px;
+  color: white;
+  margin-left: 20px;
+}
+
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 30px;
+    background: #111;
+    font-size: 14px;
+  }
+  .learning-section {
+    background-color: #111;
+    padding: 50px 20px;
+  }
+  
+  .learning-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 40px;
+  }
+  
+  .learning-header h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  
+  .learning-header p {
+    font-size: 14px;
+    color: #ccc;
+  }
+  
+  .learning-grid {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }
+  
+  @media (min-width: 768px) {
+    .learning-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .course-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  .course-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .course-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .course-info {
+    padding: 15px;
+  }
+  
+  .course-info h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .price {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #000;
+  }
+  
+  
+
+       /* Social Sidebar */
+       .social-sidebar {
+        position: fixed;
+        top: 35%;
+        right: 0;
+        background: rgba(136, 136, 136, 0.95);
+        padding: 10px 5px;
+        border-radius: 10px 0 0 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 1000;
+        transition: right 0.3s ease, left 0.3s ease;
+      }
+      /* When moved to the left */
+.social-sidebar.move-left {
+    right: auto;
+    left: 0;
+    border-radius: 0 10px 10px 0;
+  }
+      
+  .social-sidebar .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .social-sidebar .icon img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Brand colors */
+  .icon.facebook { background-color: #3b5998; }
+  .icon.twitter { background-color: #000; } /* X (Twitter) */
+  .icon.linkedin { background-color: #0077b5; }
+  .icon.instagram { background-color: #e1306c; }
+  .icon.phone { background-color: #3fa9f5; }
+  .icon.whatsapp { background-color: #25d366; }
+  .icon.google { background-color: #4285f4; }
+  

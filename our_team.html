@@ -1,0 +1,147 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forsight</title>
+  <link rel="icon" type="image/png" href="logo_transperant.png" sizes="64x64">
+
+  <!-- <link rel="stylesheet" href="style.css" /> -->
+  <link rel="stylesheet" href="css/test.css" />
+</head>
+<body>
+
+  <header>
+    <div class="logo-img-absolute">
+      <img src="images/logo_home.jpg" alt="Logo">
+    </div>
+    <nav class="navbar">
+      <div class="logo-text-container">
+        <h1 class="logo-text">Forsight</h1>
+        <p class="responsive-paragraph">
+          Institute of Cruise ships careers programs
+        </p>
+        <style>
+          .responsive-paragraph {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            color: #fefefe;
+            font-size: 13px;
+          }
+        
+          @media (min-width: 768px) {
+            .responsive-paragraph {
+              font-size: 19px;
+            }
+          }
+        </style>
+      </div>
+      <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+      <ul class="nav-links" id="nav-links">
+        <div class="close-icon" id="menu-close">&times;</div>
+        <a href="#who-we-are">Who We Are</a>
+      <a href="#modules">Learning Modules</a>
+      <a href="#resources">Resources</a>
+      <a href="#team">Our Team</a>
+      <a href="#contact">Contact</a>
+      <a href="#login" class="login">Log In</a>
+      <a href="#enroll" class="enroll">Enroll Now</a>
+      </ul>
+    </nav>
+  </header>
+  
+  <div class="learning-header">
+    <h2>Meet The Team</h2>
+    <p>The business leaders of today</p> 
+  </div>
+  <section class="learning-section ">
+   
+
+    <div class="learning-grid">
+        <div class="course-card">
+            <img src="images/reception.png" alt="Blog Image">
+            <div class="course-info">
+             
+              
+              <h3>New data tools you should know</h3>
+              
+              <p class="subtitle">
+                Create a blog post subtitle that summarizes your post in a few short, punchy sentences and entices your audience to continue reading....
+              </p>
+              
+            
+            </div>
+          </div>
+        
+          
+          
+          <div class="course-card">
+            <img src="images/reception.png" alt="Blog Image">
+            <div class="course-info">
+              
+              
+              <h3>New data tools you should know</h3>
+              
+              <p class="subtitle">
+                Create a blog post subtitle that summarizes your post in a few short, punchy sentences and entices your audience to continue reading....
+              </p>
+              
+            
+            </div>
+          </div>
+
+          <div class="course-card">
+            <img src="images/reception.png" alt="Blog Image">
+            <div class="course-info">
+              
+              
+              <h3>New data tools you should know</h3>
+              
+              <p class="subtitle">
+                Create a blog post subtitle that summarizes your post in a few short, punchy sentences and entices your audience to continue reading....
+              </p>
+              
+            
+            </div>
+          </div>
+    </div>
+  </section>
+  <div class="social-sidebar">
+    <!-- <a href="#"><div class="icon facebook"><img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png" alt="Facebook"/></div></a>
+    <a href="#"><div class="icon twitter"><img src="https://img.icons8.com/ios-filled/24/ffffff/x.png" alt="X"/></div></a> -->
+    <a href="#"><div class="icon linkedin"><img src="https://img.icons8.com/ios-filled/24/ffffff/linkedin.png" alt="LinkedIn"/></div></a>
+    <!-- <a href="#"><div class="icon instagram"><img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png" alt="Instagram"/></div></a>
+    <a href="#"><div class="icon phone"><img src="https://img.icons8.com/ios-filled/24/ffffff/phone.png" alt="Phone"/></div></a> -->
+    <a href="https://wa.me/+91 8943876225" target="_blank">
+      <div class="icon whatsapp">
+        <img src="https://img.icons8.com/ios-filled/24/ffffff/whatsapp.png" alt="WhatsApp"/>
+      </div>
+    </a>
+        <!-- <a href="#"><div class="icon google"><img src="https://img.icons8.com/ios-filled/24/ffffff/google-logo.png" alt="Gmail"/></div></a> -->
+  </div>
+
+  <footer>
+    <p>Subscribe to our Mailing List</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    function sharePost() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'New data tools you should know',
+          text: 'Check out this blog post on new data tools!',
+          url: window.location.href
+        }).then(() => {
+          console.log('Shared successfully!');
+        }).catch(console.error);
+      } else {
+        alert("Sharing not supported in this browser.");
+      }
+    }
+  </script>
+            
+</body>
+</html>
