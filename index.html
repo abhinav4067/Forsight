@@ -162,17 +162,73 @@
     </div>
   </section>
   
-  
   <section class="quote-section">
     <div class="quote-overlay">
       <div class="quote-content">
-        <p class="quote-text">“Success is not final, failure is not fatal: it is the courage to continue that counts.”</p>
-        <p class="quote-author">Winston Churchill</p>
-        <div class="quote-dot"></div>
+        <p class="quote-text fade-in-up">“Success is not final, failure is not fatal: it is the courage to continue that counts.”</p>
+        <p class="quote-author fade-in-up delay-1">Winston Churchill</p>
+        <div class="quote-dot fade-in-up delay-2"></div>
       </div>
     </div>
-  </section>
   
+    <!-- Move this inside the section -->
+    <div class="quote-animated-dots">
+        <span class="dot" id="dot1"></span>
+        <span class="dot" id="dot2"></span>
+        <span class="dot" id="dot3"></span>
+        <span class="dot" id="dot4"></span>
+      </div>
+      
+  </section>
+  <script>
+    const dots = [
+      document.getElementById("dot1"),
+      document.getElementById("dot2"),
+      document.getElementById("dot3"),
+      document.getElementById("dot4")
+    ];
+  
+    const centerX = window.innerWidth / 2;
+    const spacing = 20; // spacing between dots
+  
+    function animateDots() {
+      // Step 1: Move all dots to center with spacing
+      dots.forEach((dot, i) => {
+        const offset = (i - 1.5) * spacing; // -30, -10, +10, +30
+        dot.dataset.offset = offset; // Save offset for later use
+        dot.style.transition = `transform 1.5s linear`;
+        dot.style.transform = `translateX(${centerX + offset}px)`;
+        dot.style.opacity = 1;
+      });
+  
+      // Step 2: After pause, move each dot out separately
+      setTimeout(() => {
+        dots.forEach((dot, i) => {
+          const delay = Math.random() * 800 + 300;
+          setTimeout(() => {
+            const offset = parseFloat(dot.dataset.offset);
+            const flyDistance = window.innerWidth; // distance to move
+            dot.style.transition = `transform ${2 + Math.random()}s linear, opacity 1s ease`;
+            dot.style.transform = `translateX(${centerX + offset + flyDistance}px)`;
+            dot.style.opacity = 0;
+          }, delay);
+        });
+  
+        // Step 3: Reset and restart
+        setTimeout(() => {
+          dots.forEach(dot => {
+            dot.style.transition = "none";
+            dot.style.transform = `translateX(0px)`;
+            dot.style.opacity = 0;
+          });
+          setTimeout(animateDots, 300); // Restart loop
+        }, 3500);
+      }, 2000); // pause at center
+    }
+  
+    animateDots();
+  </script>
+      
 
   <footer>
     <p>Subscribe to our Mailing List</p>
