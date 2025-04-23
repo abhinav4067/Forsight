@@ -21,11 +21,10 @@
     </div>
     <nav class="navbar">
       <div class="logo-text-container">
-        <h1 class="logo-text">Foresight</h1>
-        <p class="responsive-paragraph">
-          Institute of Hotel Management
-
-        </p>
+        <div class="logo">
+          <h1 class="">Foresight<span class="dot">.</span></h1>
+          <p class="">Institute of Hotel Management</p>
+        </div>
         <style>
           .responsive-paragraph {
             font-family: 'Poppins', sans-serif;
@@ -57,9 +56,36 @@
   
   <div class="learning-header">
     <h2>Resources</h2>
-    <p style="margin-bottom: -1.4%;">Expand your knowledge toolkit by reading</p> <br>
-    <p>from the most prominent experts</p> 
+    <p class="subtext">Expand your knowledge toolkit by reading</p>
+    <p class="subtext">from the most prominent experts</p>
   </div>
+<style>.learning-header {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.learning-header h2 {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.learning-header .subtext {
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .learning-header h2 {
+    font-size: 28px;
+  }
+
+  .learning-header .subtext {
+    font-size: 16px;
+  }
+}
+</style>  
   <section class="learning-section ">
    
 
