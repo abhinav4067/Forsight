@@ -10,6 +10,7 @@
 
   <!-- <link rel="stylesheet" href="style.css" /> -->
   <link rel="stylesheet" href="css/test.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
@@ -46,12 +47,34 @@
         <a href="resources.html">Resources</a>
         <a href="our_team.html">Our Team</a>
         <a href="contact.html">Contact</a>
-        <a href="#login" class="login">Log In</a>
-        <a href="#enroll" class="enroll open-modal-btn">Enroll Now</a>      </ul>
+        <a href="reg&login.html" class="login">Log In</a>
+        <a href="#enroll" class="enroll open-modal-btn">Enroll Now</a>     
       </ul>
     </nav>
   </header>
-  
+  <div id="registrationModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModalBtn">&times;</span>
+      <h2>Student Registration Form</h2>
+      <form class="registration-form" onsubmit="event.preventDefault(); alert('Registration Submitted Successfully!'); document.getElementById('registrationModal').style.display = 'none';">
+        <input type="text" name="fullName" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email Address" required />
+        <input type="tel" name="phone" placeholder="Phone Number" required />
+        <!-- <input type="text" name="address" placeholder="Permanent Address" required /> -->
+        <input type="text" name="qualification" placeholder="Educational Qualification" required />
+        <input type="text" name="course" placeholder="Preferred Course" required />
+        <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
+      
+        <!-- ✅ Resume Upload -->
+        <label for="resume" style="font-weight: 500;">Upload Your Resume</label>
+        <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" required />
+      
+        <button type="submit" class="submit-btn" style="background-color: #000; color: #fff; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+          Submit Registration
+        </button>
+              </form>
+    </div>
+  </div>
   <div class="learning-header">
     <h2>Meet The Team</h2>
     <p>The business leaders of today</p> 
@@ -61,15 +84,16 @@
 
     <div class="learning-grid">
         <div class="course-card">
-            <img src="images/reception.png" alt="Blog Image">
+            <img src="images/professor3.jpg" alt="Blog Image">
             <div class="course-info">
              
               
-              <h3>New data tools you should know</h3>
-              
+              <h3>Asha Varma: Pioneer in Data Science Education</h3>
+
               <p class="subtitle">
-                Create a blog post subtitle that summarizes your post in a few short, punchy sentences and entices your audience to continue reading....
+                Asha Varma is a respected professor with a legacy of innovation in data education. Known for her impactful teaching and forward-thinking research, she empowers learners to explore big data, machine learning, and the ethics of AI with confidence.
               </p>
+              
               
             
             </div>
@@ -78,30 +102,30 @@
           
           
           <div class="course-card">
-            <img src="images/reception.png" alt="Blog Image">
+            <img src="images/professor1.jpg" alt="Blog Image" >
             <div class="course-info">
               
               
-              <h3>New data tools you should know</h3>
-              
+              <h3>Dr. Arvind Rao: Leading the Charge in Data Innovation</h3>
+
               <p class="subtitle">
-                Create a blog post subtitle that summarizes your post in a few short, punchy sentences and entices your audience to continue reading....
+                Dr. Arvind Rao is a visionary educator and researcher known for his deep expertise in AI and data analytics. Through dynamic lectures and real-world projects, he equips students with tools to tackle modern challenges and innovate across industries.
               </p>
-              
             
             </div>
           </div>
 
           <div class="course-card">
-            <img src="images/reception.png" alt="Blog Image">
+            <img src="images/professor2.jpg" alt="Blog Image">
             <div class="course-info">
               
               
-              <h3>New data tools you should know</h3>
-              
+              <h3>Prof. Meera Thomas: Redefining Data Education for the Future</h3>
+
               <p class="subtitle">
-                Create a blog post subtitle that summarizes your post in a few short, punchy sentences and entices your audience to continue reading....
+                Prof. Meera Thomas brings a fresh perspective to data science education, combining academic rigor with practical application. Her passion for teaching and hands-on research is helping shape a generation ready to lead in the age of intelligent systems.
               </p>
+              
               
             
             </div>
@@ -125,7 +149,7 @@
   <footer>
     <p>Subscribe to our Mailing List</p>
   </footer>
-
+  
   <script src="js/script.js"></script>
   <script>
     function sharePost() {
@@ -142,6 +166,30 @@
       }
     }
   </script>
-            
+   <script>
+    const modal = document.getElementById("registrationModal");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+  
+    // Get all buttons that should open the modal
+    const openModalBtns = document.querySelectorAll(".open-modal-btn");
+  
+    // Add event listener to each button
+    openModalBtns.forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        modal.style.display = "block";
+      };
+    });
+  
+    closeModalBtn.onclick = () => {
+      modal.style.display = "none";
+    };
+  
+    window.onclick = (event) => {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+  </script>         
 </body>
 </html>
