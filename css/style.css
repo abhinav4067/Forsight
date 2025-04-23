@@ -15,7 +15,7 @@
   /* Hero Section */
   .hero {
     height: 100vh;
-    background: url('https://static.wixstatic.com/media/84770f_67c151c202d840df99b91a3404a7b387~mv2.jpg') center/cover no-repeat;
+    background: url('images/building3.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,9 +49,10 @@
   /* Footer */
   footer {
     text-align: center;
-    padding: 30px;
-    background: #111;
+    padding: 15px;
+    background:white;
     font-size: 14px;
+    color: black;
   }
   
   /* Animations */
@@ -112,8 +113,29 @@
   .enroll-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 60px 40px;
+    gap: 0; /* Remove space between boxes */
+    border-collapse: collapse;
   }
+  
+  .enroll-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px;
+  }
+  
+  /* Central vertical border */
+  .enroll-grid > .enroll-item:nth-child(1),
+  .enroll-grid > .enroll-item:nth-child(3) {
+    border-right: 1px solid black;
+  }
+  
+  .enroll-grid > .enroll-item:nth-child(1),
+  .enroll-grid > .enroll-item:nth-child(2) {
+    border-bottom: 1px solid black;
+  }
+  
   
   @media (max-width: 768px) {
     .enroll-grid {
@@ -347,8 +369,8 @@
 
   .quote-section {
     /* background: url('images/your-image.png') center center / cover no-repeat; */
-    background-color: black;
-    height: 100vh;
+    background-color: rgb(35, 34, 34);
+    height: 50vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -384,39 +406,6 @@
     margin-bottom: 10px;
   }
   
-  /* Add this to your global styles */
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scroll */
-}
-
-/* Updated .quote-animated-dots */
-.quote-animated-dots {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  height: 20px;
-  pointer-events: none;
-  overflow: hidden; /* Keep animations contained */
-}
-
-/* Dot style */
-.dot {
-  width: 10px;
-  height: 10px;
-  background: white;
-  border-radius: 50%;
-  position: absolute;
-  top: 0;
-  left: 50%; /* Start from center */
-  opacity: 0;
-  transition: transform 1s linear, opacity 0.3s ease;
-  transform: translateX(0);
-}
-
 
 
 /*REGISTER Modal Styling */

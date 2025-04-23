@@ -104,7 +104,124 @@
     </a>
         <!-- <a href="#"><div class="icon google"><img src="https://img.icons8.com/ios-filled/24/ffffff/google-logo.png" alt="Gmail"/></div></a> -->
   </div>
-
+  <section class="cta-section cta-animate">
+    <div class="cta-left" >
+      <div class="logo">
+        <h1 class="animate-left">Foresight<span class="dot">.</span></h1>
+        <p class="animate-left">Institute of Hotel Management</p>
+      </div>
+      <div class="cta-text">
+        <h2 class="animate-left">Join The<br>Success!</h2>
+        <button class="animate-left btn fade-in-up delay-2 open-modal-btn">Enroll Now</button>
+      </div>
+    </div>
+  
+    <div class="cta-right">
+      <div class="info-block animate-left">
+        <h3>Info</h3>
+        <p>123-456-7890</p>
+        <p>Info@mysite.com</p>
+      </div>
+      <div class="info-block animate-left">
+        <h3>Address</h3>
+        <p>500 Terry Francine St</p>
+        <p>San Francisco, CA 94158</p>
+      </div>
+      <div class="info-block animate-left">
+        <h3>Follow</h3>
+        <a href="#">LinkedIn</a>
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+  
+    <div class="scroll-top animate-up">
+      <span>&uarr;</span>
+    </div>
+  </section>
+  
+  <style>
+    /* Animation styles */
+    .animate-left,
+    .animate-up {
+      opacity: 0;
+    }
+  
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-60px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  
+    .animate-left.visible {
+      animation: slideInLeft 1s ease-out forwards;
+    }
+  
+    @keyframes slideInUp {
+      from {
+        transform: translateY(60px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  
+    .animate-up.visible {
+      animation: slideInUp 1s ease-out forwards;
+    }
+  
+    /* Original observer style */
+    .cta-animate {
+      opacity: 0;
+      transform: translateY(100px);
+      transition: all 0.5s ease-out;
+    }
+  
+    .cta-animate.animate {
+      animation: slideInUp 1s ease-out forwards;
+    }
+  </style>
+  
+  <script>
+    // Your existing animation logic for whole section
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+  
+    const ctaSection = document.querySelector('.cta-animate');
+    observer.observe(ctaSection);
+  
+    // New animation for individual elements only (not borders)
+    const animatedItems = document.querySelectorAll('.animate-left, .animate-up');
+  
+    const animationObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          animationObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.3
+    });
+  
+    animatedItems.forEach(item => animationObserver.observe(item));
+  </script>
+    
   <footer>
     <p>© 2025 Foresight. All rights reserved.</p>
   </footer>
@@ -122,7 +239,7 @@
         <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
       
         <!-- ✅ Resume Upload -->
-        <label for="resume" style="font-weight: 500;">Upload Your Resume</label>
+        <label for="resume" style="color: #000;">Upload Your Resume</label>
         <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" required />
       
         <button type="submit" class="submit-btn" style="background-color: #000; color: #fff; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">

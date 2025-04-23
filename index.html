@@ -67,7 +67,7 @@
         <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
       
         <!-- ✅ Resume Upload -->
-        <label for="resume" style="font-weight: 500;">Upload Your Resume</label>
+        <label for="resume" style="color: #000;">Upload Your Resume</label>
         <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" required />
       
         <button type="submit" class="submit-btn" style="background-color: #000; color: #fff; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
@@ -76,7 +76,7 @@
               </form>
     </div>
   </div>
-  <section class="hero">
+  <section class="hero" style="background-image: url('images/building3.jpg');">
     <div class="hero-content">
       <h1 class="fade-in-up">Foresight Institute of Hotel Management</h1>
       <p class="fade-in-up delay-1">The destination for leaders who seek to change the world</p>
@@ -84,35 +84,92 @@
     </div>
   </section>
 
+  <style>
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  
+    .slide-in-left {
+      opacity: 0;
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      transform: translateX(-50px);
+    }
+  
+    .slide-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+      animation: slideInLeft 1s ease-out forwards;
+    }
+  </style>
+  
   <section class="enroll-section">
     <div class="container">
-      <div class="enroll-heading">
-        <h2>Why Enroll in Our Programs?</h2>
-      </div>
       <div class="enroll-grid">
-        <div class="enroll-item">
-          <div class="icon-box"></div>
-          <h3>Self - Paced Program</h3>
-          <p>I'm a paragraph. Click here to add your own text and edit me. I'm a great place for you to tell a story and let your users know a little more about you.</p>
+        <div class="enroll-item" style="border-right: solid 1px black; border-bottom: solid 1px black;">
+          <div class="icon-box slide-in-left"></div>
+          <h1 style="color: black;" class="slide-in-left">Why Enroll in Our Programs?</h1>
+        </div>
+        <div class="enroll-item" style="border-bottom: solid 1px black;">
+          <div class="icon-box purple slide-in-left" style="margin-left: 8%;"></div>
+          <h3 class="slide-in-left" style="margin-left: 8%;">Simple Online Enrollment</h3>
+          <p class="slide-in-left" style="margin-left: 8%;">I'm a paragraph. Click here to add your own text and edit me.</p>
+        </div>
+        <div class="enroll-item" style="border-right: solid 1px black;">
+          <div class="icon-box half slide-in-left"></div>
+          <h3 class="slide-in-left">Professional Mentors</h3>
+          <p class="slide-in-left">I'm a paragraph. Click here to add your own text and edit me.</p>
         </div>
         <div class="enroll-item">
-          <div class="icon-box purple"></div>
-          <h3>Simple Online Enrollment</h3>
-          <p>I'm a paragraph. Click here to add your own text and edit me. I'm a great place for you to tell a story and let your users know a little more about you.</p>
-        </div>
-        <div class="enroll-item">
-          <div class="icon-box half"></div>
-          <h3>Professional Mentors</h3>
-          <p>I'm a paragraph. Click here to add your own text and edit me. I'm a great place for you to tell a story and let your users know a little more about you.</p>
-        </div>
-        <div class="enroll-item">
-          <div class="icon-box border-only"></div>
-          <h3>Career Support</h3>
-          <p>I'm a paragraph. Click here to add your own text and edit me. I'm a great place for you to tell a story and let your users know a little more about you.</p>
+          <div class="icon-box border-only slide-in-left" style="margin-left: 8%;"></div>
+          <h3 class="slide-in-left" style="margin-left: 8%;">Self - Paced Program</h3>
+          <p class="slide-in-left" style="margin-left: 8%;">I'm a paragraph. Click here to add your own text and edit me.</p>
         </div>
       </div>
     </div>
   </section>
+  <style>@media (max-width: 768px) {
+    .enroll-item {
+      border: none !important;
+      border-bottom: 1px solid black !important;
+    }
+  
+    /* Optional: Remove the last item's border-bottom */
+    .enroll-item:last-child {
+      border-bottom: none !important;
+    }
+    .enroll-item * {
+    margin-left: 0 !important;
+  }
+  }
+  
+  </style>
+  <script>
+    // Renamed variables to avoid conflicts
+    const animatedElements = document.querySelectorAll('.slide-in-left');
+  
+    const scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Optionally unobserve if you only want animation once
+          scrollObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+  
+    animatedElements.forEach(el => scrollObserver.observe(el));
+  </script>
+  
+    
   <section class="about-fixed-section" style="background-image: url('images/building.jpg');">
     <div class="overlay">
       <div class="content-wrapper">
@@ -163,7 +220,7 @@
     </div>
   </section>
   
-  <section class="quote-section">
+  <section class="quote-section"  >
     <div class="quote-overlay">
       <div class="quote-content">
         <p class="quote-text fade-in-up">“Success is not final, failure is not fatal: it is the courage to continue that counts.”</p>
@@ -172,64 +229,128 @@
       </div>
     </div>
   
-    <!-- Move this inside the section -->
-    <div class="quote-animated-dots">
-        <span class="dot" id="dot1"></span>
-        <span class="dot" id="dot2"></span>
-        <span class="dot" id="dot3"></span>
-        <span class="dot" id="dot4"></span>
-      </div>
+   
       
   </section>
-  <script>
-    const dots = [
-      document.getElementById("dot1"),
-      document.getElementById("dot2"),
-      document.getElementById("dot3"),
-      document.getElementById("dot4")
-    ];
+
+  <section class="cta-section cta-animate">
+    <div class="cta-left" >
+      <div class="logo">
+        <h1 class="animate-left">Foresight<span class="dot">.</span></h1>
+        <p class="animate-left">Institute of Hotel Management</p>
+      </div>
+      <div class="cta-text">
+        <h2 class="animate-left">Join The<br>Success!</h2>
+        <button class="animate-left btn fade-in-up delay-2 open-modal-btn">Enroll Now</button>
+      </div>
+    </div>
   
-    const centerX = window.innerWidth / 2;
-    const spacing = 20; // spacing between dots
+    <div class="cta-right">
+      <div class="info-block animate-left">
+        <h3>Info</h3>
+        <p>123-456-7890</p>
+        <p>Info@mysite.com</p>
+      </div>
+      <div class="info-block animate-left">
+        <h3>Address</h3>
+        <p>500 Terry Francine St</p>
+        <p>San Francisco, CA 94158</p>
+      </div>
+      <div class="info-block animate-left">
+        <h3>Follow</h3>
+        <a href="#">LinkedIn</a>
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
   
-    function animateDots() {
-      // Step 1: Move all dots to center with spacing
-      dots.forEach((dot, i) => {
-        const offset = (i - 1.5) * spacing; // -30, -10, +10, +30
-        dot.dataset.offset = offset; // Save offset for later use
-        dot.style.transition = `transform 1.5s linear`;
-        dot.style.transform = `translateX(${centerX + offset}px)`;
-        dot.style.opacity = 1;
-      });
+    <div class="scroll-top animate-up">
+      <span>&uarr;</span>
+    </div>
+  </section>
   
-      // Step 2: After pause, move each dot out separately
-      setTimeout(() => {
-        dots.forEach((dot, i) => {
-          const delay = Math.random() * 800 + 300;
-          setTimeout(() => {
-            const offset = parseFloat(dot.dataset.offset);
-            const flyDistance = window.innerWidth; // distance to move
-            dot.style.transition = `transform ${2 + Math.random()}s linear, opacity 1s ease`;
-            dot.style.transform = `translateX(${centerX + offset + flyDistance}px)`;
-            dot.style.opacity = 0;
-          }, delay);
-        });
-  
-        // Step 3: Reset and restart
-        setTimeout(() => {
-          dots.forEach(dot => {
-            dot.style.transition = "none";
-            dot.style.transform = `translateX(0px)`;
-            dot.style.opacity = 0;
-          });
-          setTimeout(animateDots, 300); // Restart loop
-        }, 3500);
-      }, 2000); // pause at center
+  <style>
+    /* Animation styles */
+    .animate-left,
+    .animate-up {
+      opacity: 0;
     }
   
-    animateDots();
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-60px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  
+    .animate-left.visible {
+      animation: slideInLeft 1s ease-out forwards;
+    }
+  
+    @keyframes slideInUp {
+      from {
+        transform: translateY(60px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  
+    .animate-up.visible {
+      animation: slideInUp 1s ease-out forwards;
+    }
+  
+    /* Original observer style */
+    .cta-animate {
+      opacity: 0;
+      transform: translateY(100px);
+      transition: all 0.5s ease-out;
+    }
+  
+    .cta-animate.animate {
+      animation: slideInUp 1s ease-out forwards;
+    }
+  </style>
+  
+  <script>
+    // Your existing animation logic for whole section
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+  
+    const ctaSection = document.querySelector('.cta-animate');
+    observer.observe(ctaSection);
+  
+    // New animation for individual elements only (not borders)
+    const animatedItems = document.querySelectorAll('.animate-left, .animate-up');
+  
+    const animationObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          animationObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.3
+    });
+  
+    animatedItems.forEach(item => animationObserver.observe(item));
   </script>
-      
+    
 
   <footer>
     <p>© 2025 Foresight. All rights reserved.</p>
@@ -259,6 +380,7 @@
       }
     };
   </script>
+ 
   
   <script src="js/script.js"></script>
 
