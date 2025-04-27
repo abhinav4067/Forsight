@@ -1,0 +1,286 @@
+{% load static %}
+
+{% block header %}
+{% include 'foresight_app/header.html' %}
+{% endblock %}
+  
+  <div class="learning-header">
+    <h2>Resources</h2>
+    <p class="subtext">Expand your knowledge toolkit by reading</p>
+    <p class="subtext">from the most prominent experts</p>
+  </div>
+<style>.learning-header {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.learning-header h2 {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.learning-header .subtext {
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .learning-header h2 {
+    font-size: 28px;
+  }
+
+  .learning-header .subtext {
+    font-size: 16px;
+  }
+}
+</style>  
+  <section class="learning-section">
+  <div class="learning-grid">
+    {% for post in posts %}
+      <div class="course-card">
+        <img src="{{ post.image.url }}" alt="Blog Image">
+
+        <div class="course-info">
+          <div class="meta" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>• {{ post.created_at }}</span>
+            <span onclick="sharePost()" style="cursor: pointer;" title="Share this post">
+              <svg style="width: 20px; height: 20px; fill: #0077cc;" viewBox="0 0 24 24">
+                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.03-.47-.09-.7l7.05-4.11c.53.5 1.23.81 2.04.81 
+                  1.66 0 3-1.34 3-3S19.66 2 18 2s-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.8 9 6 9c-1.66 0-3 1.34-3 3s1.34 
+                  3 3 3c.8 0 1.5-.31 2.04-.81l7.05 4.11c-.05.21-.09.43-.09.66 0 1.66 1.34 3 3 3s3-1.34 
+                  3-3-1.34-3-3-3z"/>
+              </svg>
+            </span>
+          </div>
+
+          <h3>{{ post.heading }}</h3>
+
+          <p class="subtitle">{{ post.content|slice:":50" }}{% if post.content|length > 50 %}...{% endif %}</p>
+
+          <a href="#" class="view-btn" onclick="openModal('{{ post.heading }}', '{{ post.content|escapejs }}')">Read More</a>
+
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+<div id="contentModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <p id="modalBody"></p>
+  </div>
+</div>
+<style>.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+  color: #000;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #080808;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+</style>
+<script>
+  function openModal(title, content) {
+    document.getElementById("modalTitle").innerText = title;
+    document.getElementById("modalBody").innerText = content;
+    document.getElementById("contentModal").style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById("contentModal").style.display = "none";
+  }
+
+  // Close modal if clicked outside modal-content
+  window.addEventListener("click", function(event) {
+    const modal = document.getElementById("contentModal");
+    const modalContent = document.querySelector(".modal-content");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+</script>
+
+  <div class="social-sidebar">
+    <!-- <a href="#"><div class="icon facebook"><img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png" alt="Facebook"/></div></a>
+    <a href="#"><div class="icon twitter"><img src="https://img.icons8.com/ios-filled/24/ffffff/x.png" alt="X"/></div></a> -->
+    <a href="#"><div class="icon linkedin"><img src="https://img.icons8.com/ios-filled/24/ffffff/linkedin.png" alt="LinkedIn"/></div></a>
+    <!-- <a href="#"><div class="icon instagram"><img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png" alt="Instagram"/></div></a>
+    <a href="#"><div class="icon phone"><img src="https://img.icons8.com/ios-filled/24/ffffff/phone.png" alt="Phone"/></div></a> -->
+    <a href="https://wa.me/+91 8943876225" target="_blank">
+      <div class="icon whatsapp">
+        <img src="https://img.icons8.com/ios-filled/24/ffffff/whatsapp.png" alt="WhatsApp"/>
+      </div>
+    </a>
+        <!-- <a href="#"><div class="icon google"><img src="https://img.icons8.com/ios-filled/24/ffffff/google-logo.png" alt="Gmail"/></div></a> -->
+  </div>
+ 
+  {% block footer %}
+  {% include 'foresight_app/footer.html' %}
+  {% endblock %}
+
+  
+  <script>
+    function sharePost() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'New data tools you should know',
+          text: 'Check out this blog post on new data tools!',
+          url: window.location.href
+        }).then(() => {
+          console.log('Shared successfully!');
+        }).catch(console.error);
+      } else {
+        alert("Sharing not supported in this browser.");
+      }
+    }
+  </script>
+      <div id="registrationModal" class="modal">
+        <div class="modal-content">
+          <span class="close" id="closeModalBtn">&times;</span>
+          <h2>Student Registration Form</h2>
+          <form class="registration-form" action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="fullName" placeholder="Full Name" required />
+            <input type="email" name="email" placeholder="Email Address" required />
+            <input type="tel" name="phone" placeholder="Phone Number" required />
+            <input type="text" name="qualification" placeholder="Educational Qualification" required />
+            <input type="text" name="course" placeholder="Preferred Course" required />
+            <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
+          
+            <div class="custom-file-upload">
+              <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" required />
+              <input type="text" id="fake-file-name" placeholder="No file chosen" readonly />
+              <label for="resume" class="upload-label">Choose Resume</label>
+    
+            </div>
+            
+            
+          
+            <button type="submit" class="submit-btn" style="background-color: #000; color: #fff; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+              Submit Registration
+            </button>
+          </form>
+          
+        </div>
+      </div>
+      <script>
+      const resumeInput = document.getElementById('resume');
+    const fakeInput = document.getElementById('fake-file-name');
+    
+    resumeInput.addEventListener('change', function () {
+      const fileName = this.files[0]?.name || "No file chosen";
+      fakeInput.value = fileName;
+    });
+    
+      </script>
+    {% if messages %}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        {% for message in messages %}
+          Swal.fire({
+            icon: "{{ message.tags|default:'info' }}",
+            title: "{{ message|escapejs }}",
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "OK"
+          });
+        {% endfor %}
+      });
+    </script>
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+      <script>
+        const modal = document.getElementById("registrationModal");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+      
+        // Get all buttons that should open the modal
+        const openModalBtns = document.querySelectorAll(".open-modal-btn");
+      
+        // Add event listener to each button
+        openModalBtns.forEach(btn => {
+          btn.onclick = (e) => {
+            e.preventDefault();
+            modal.style.display = "block";
+          };
+        });
+      
+        closeModalBtn.onclick = () => {
+          modal.style.display = "none";
+        };
+      
+        window.onclick = (event) => {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+      </script>
+      
+      
+    <style>.custom-file-upload {
+      position: relative;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .custom-file-upload input[type="file"] {
+      display: none;
+    }
+    
+    .upload-label {
+      background-color: #000000;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    
+    #fake-file-name {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    </style>
+      
+</body>
+</html>

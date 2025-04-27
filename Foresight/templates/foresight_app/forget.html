@@ -1,0 +1,163 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Foresight</title>
+  <link rel="icon" type="image/jpg" href="{% static 'images/logo_home.jpg' %}" sizes="64x64">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #1c1a1a;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .forgot-container {
+      background-color: #000;
+      padding: 2rem;
+      width: 350px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    }
+
+    .forgot-container h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .forgot-container input {
+      background: #1c1a1a;
+      color: #fff;
+      border: 1px solid #444;
+      padding: 10px;
+      margin-bottom: 1rem;
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .forgot-container button {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .forgot-container button:hover {
+      background-color: #ddd;
+    }
+
+    .forgot-container .small {
+      font-size: 0.85rem;
+      text-align: center;
+      color: #aaa;
+      margin-bottom: 1rem;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 40px;
+      margin-top: 5%;
+    }
+
+    .password-wrapper .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="forgot-container">
+  <h2>Reset Password</h2>
+
+  <div style="text-align: center; margin-bottom: 2%;">  
+    {% if messages %}
+    <p class="error-messages">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+  </p>
+{% endif %}</div>
+
+  <form method="POST" action="{% url 'admin_forget' %}" id="forgot-form">
+    {% csrf_token %}
+
+    <!-- Send OTP Button -->
+    <button type="submit" name="action" value="send_otp" onclick="setAction('send_otp')">Send OTP</button>
+
+    <div id="otp-section" style="display: none;">
+      <div class="small">Check your registered email inbox or spam folder.</div>
+
+      <input type="text" name="otp" placeholder="Enter OTP">
+
+      <div class="password-wrapper">
+        <input type="password" name="new_password" id="new-password" placeholder="New Password">
+        <span class="toggle-password" onclick="togglePassword('new-password', this)">🙉</span>
+      </div>
+
+      <div class="password-wrapper">
+        <input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm Password">
+        <span class="toggle-password" onclick="togglePassword('confirm-password', this)">🙉</span>
+      </div>
+
+      <button type="submit" name="action" value="verify_otp" onclick="setAction('verify_otp')">Reset Password</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  function togglePassword(inputId, icon) {
+    const input = document.getElementById(inputId);
+    if (input.type === "password") {
+      input.type = "text";
+      icon.textContent = "🙈";
+    } else {
+      input.type = "password";
+      icon.textContent = "🙉";
+    }
+  }
+
+  function setAction(actionType) {
+    if (actionType === "send_otp") {
+      // normal submit
+    } else if (actionType === "verify_otp") {
+      document.querySelector('input[name="otp"]').required = true;
+      document.querySelector('input[name="new_password"]').required = true;
+      document.querySelector('input[name="confirm_password"]').required = true;
+    }
+  }
+
+  {% if otp_sent %}
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("otp-section").style.display = "block";
+    });
+  {% endif %}
+</script>
+
+</body>
+</html>

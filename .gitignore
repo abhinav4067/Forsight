@@ -1,0 +1,30 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+venv_311/
+env/
+ENV/
+.venv/
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+
+# macOS
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# pycache in subfolders
+**/__pycache__/
+
+# dotenv
+.env

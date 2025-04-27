@@ -1,0 +1,597 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Foresight</title>
+  <link rel="icon" type="image/jpg" href="{% static 'images/logo_home.jpg' %}" sizes="64x64">
+
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --table-border: #cccccc;
+      --modal-bg: #ffffff;
+      --sidebar-bg: #f4f4f4;
+    }
+
+    body.dark-mode {
+      --bg-color: #121212;
+      --text-color: #f0f0f0;
+      --table-border: #444;
+      --modal-bg: #1e1e1e;
+      --sidebar-bg: #1c1c1c;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-left: 220px;
+      transition: 0.3s;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100%;
+      background-color: var(--sidebar-bg);
+      padding-top: 60px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      z-index: 999;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: var(--text-color);
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover {
+      background-color: rgba(0,0,0,0.1);
+    }
+
+    .logo-container {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+    }
+
+    .logo {
+      height: 50px;
+      width: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .search-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .search-form input,
+    .search-form button,
+    .search-form a {
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid var(--table-border);
+      text-decoration: none;
+      color: var(--text-color);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .search-form a {
+      border: 1px solid var(--text-color);
+    }
+
+    .table-container {
+      overflow-x: auto;
+      padding: 0 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--table-border);
+      margin-bottom: 50px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid var(--table-border);
+    }
+
+    th {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    button {
+      padding: 5px 10px;
+      margin: 2px;
+      cursor: pointer;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      overflow: auto;
+    }
+
+    .modal-content {
+      background-color: var(--modal-bg);
+      margin: 10% auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 8px;
+      color: var(--text-color);
+      position: relative;
+    }
+
+    .modal-content input,
+    .modal-content textarea,
+    .modal-content select {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid var(--table-border);
+      background: var(--bg-color);
+      color: var(--text-color);
+      border-radius: 4px;
+    }
+
+    .modal-content button {
+      width: 100%;
+      padding: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 600px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      body {
+        padding-left: 0;
+      }
+
+      .search-form {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 10px;
+      }
+
+      table, th, td {
+        font-size: 14px;
+      }
+
+      .modal-content {
+        margin: 20% auto;
+      }
+    }
+
+  
+
+  </style>
+</head>
+<body>
+
+  <div class="logo-container">
+    <img src="{% static 'images/logo_home.jpg' %}" alt="Logo" class="logo">
+  </div>
+
+  <!-- Sidebar -->
+   
+  <div class="sidebar">
+    <div s>
+        <button onclick="toggleTheme()">Toggle Theme</button>
+      </div>
+      <a href="#student-dashboard">Students</a>
+      <a href="#enquiry-section">Enquiry</a>
+      <a href="#posts-section">Posts</a>
+      <form method="post" action="{% url 'log_out' %}">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn" style="background-color: red;">Logout</button>
+    </form>
+  </div>
+
+
+
+  <div id="student-dashboard">
+    <h2>Student Dashboard</h2>
+  
+    <!-- Search Form for Students -->
+    <form method="get" class="search-form" id="student-search-form">
+        <input type="text" name="student_q" placeholder="Search by name" value="{{ query }}">
+        <label for="student-from">From Date</label>
+        <input type="date" id="student-from" name="student_from" value="{{ date_from }}">
+        <label for="student-to">To Date</label>
+        <input type="date" id="student-to" name="student_to" value="{{ date_to }}">
+        <button type="submit">Search</button>
+        <a href="{% url 'export_csv' %}?q={{ query }}&from={{ date_from }}&to={{ date_to }}">Export CSV</a>
+        <a href="{% url 'export_pdf' %}?q={{ query }}&from={{ date_from }}&to={{ date_to }}">Export PDF</a>
+      </form>
+      
+  
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Qualification</th><th>Course</th><th>Resume</th><th>Actions</th>
+        </tr>
+        {% for s in students %}
+        <tr>
+          <td>{{ s.full_name }}</td>
+          <td>{{ s.email }}</td>
+          <td>{{ s.phone }}</td>
+          <td>{{ s.address }}</td>
+          <td>{{ s.qualification }}</td>
+          <td>{{ s.course }}</td>
+          <td><a href="{{ s.resume.url }}" download>Download CV</a></td>
+          <td>
+            <button onclick="openEditModal({{ s.id }})">Edit</button>
+            <button onclick="confirmDelete({{ s.id }})">Delete</button>
+          </td>
+        </tr>
+  
+        <!-- Edit Modal -->
+        <div id="editModal-{{ s.id }}" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeModal({{ s.id }})">&times;</span>
+            <h2>Edit Student</h2>
+            <form method="POST" enctype="multipart/form-data" action="{% url 'edit_student' s.pk %}">
+              {% csrf_token %}
+              <label for="full_name">Full Name</label>
+              <input id="full_name" name="full_name" value="{{ s.full_name }}">
+              <label for="email">Email</label>
+              <input id="email" name="email" value="{{ s.email }}">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" value="{{ s.phone }}">
+              <label for="address">Address</label>
+              <input id="address" name="address" value="{{ s.address }}">
+              <label for="qualification">Qualification</label>
+              <input id="qualification" name="qualification" value="{{ s.qualification }}">
+              <label for="course">Preferred Job</label>
+              <input id="course" name="course" value="{{ s.course }}">
+              <label for="resume">Upload Resume</label>
+              <input type="file" name="resume" id="resume">
+              <button type="submit">Update</button>
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  <div id="enquiry-section">
+    <h2>Enquiries</h2>
+    
+    <!-- Search Form for Enquiries -->
+    <form method="get" class="search-form" id="enquiry-search-form">
+        <input type="text" name="enquiry_q" placeholder="Search by first name" value="{{ query }}">
+        <label for="enquiry-from">From Date</label>
+        <input type="date" id="enquiry-from" name="enquiry_from" value="{{ date_from }}">
+        <label for="enquiry-to">To Date</label>
+        <input type="date" id="enquiry-to" name="enquiry_to" value="{{ date_to }}">
+        <button type="submit">Search</button>
+        <a href="{% url 'export_enquiries_csv' %}?q={{ enquiry_query }}&from={{ enquiry_date_from }}&to={{ enquiry_date_to }}">Export CSV</a>
+        <a href="{% url 'export_enquiries_pdf' %}?q={{ enquiry_query }}&from={{ enquiry_date_from }}&to={{ enquiry_date_to }}">Export PDF</a>
+        
+      </form>
+      
+    
+    <!-- Enquiries Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Message</th>
+            <th>Replied</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for enquiry in enquiries %}
+          <tr>
+            <td>{{ enquiry.submitted_at }}</td>
+            <td>{{ enquiry.first_name }}</td>
+            <td>{{ enquiry.last_name }}</td>
+            <td>
+              <a href="mailto:{{ enquiry.email }}" style="color: inherit; text-decoration: none;">
+                  {{ enquiry.email }}
+              </a>
+            </td>
+            <td>
+              <a href="tel:{{ enquiry.phone }}" style="color: inherit; text-decoration: none;" onclick="openWhatsApp('{{ enquiry.phone }}')">
+                  {{ enquiry.phone }}
+              </a>
+            </td>
+            <td>{{ enquiry.message }}</td>
+            <td>
+              <input type="checkbox"
+                     onchange="updateReplied(this, {{ enquiry.id }})"
+                     {% if enquiry.replied %}checked{% endif %}>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <script>
+    // Update replied status for enquiries
+    function updateReplied(checkbox, id) {
+      fetch("{% url 'toggle_replied' %}", {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `id=${id}&replied=${checkbox.checked}`
+      }).then(res => res.json())
+        .then(data => console.log(data));
+    }
+  
+    // Open WhatsApp chat with phone number
+    function openWhatsApp(phoneNumber) {
+      const message = "Hello, I'd like to get in touch!";
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+  
+  <div id="posts-section">
+  <h2>Posts</h2>
+
+  <!-- Add Post Button -->
+  <button onclick="openPostModal()" class="view-btn" style="margin-bottom: 20px;">Add Post</button>
+  
+  <!-- Add Post Modal -->
+  <div id="addPostModal" class="post-modal" style="display: none;">
+    <div class="post-modal-content">
+      <span class="post-close" onclick="closePostModal()">&times;</span>
+      <h3>Add New Post</h3>
+      <form id="postForm" action="{% url 'post_create' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" id="postHeading" name="heading" placeholder="Heading" required />
+        <textarea id="postContent" name="content" placeholder="Content" required></textarea>
+        <input type="file" id="postImage" name="image" accept="image/*" required />
+        <button type="submit" class="view-btn">Add Post</button>
+      </form>
+    </div>
+  </div>
+  
+  
+ <!-- Edit Post Modal -->
+<div id="post_edit" class="post-modal" style="display: none;">
+    <div class="post-modal-content">
+      <span class="post-close" onclick="closePostEditModal()">&times;</span>
+      <h3>Edit Post</h3>
+      <form id="editPostForm" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" id="editPostId" name="post_id">
+        <input type="text" id="editPostHeading" name="heading" placeholder="Heading" required />
+        <textarea id="editPostContent" name="content" placeholder="Content" required></textarea>
+        <input type="file" id="editPostImage" name="image" accept="image/*" />
+        <button type="submit" class="view-btn">Save Changes</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Delete Post Modal -->
+<div id="post_delete" class="post-modal" style="display: none;">
+    <div class="post-modal-content">
+      <span class="post-close" onclick="closePostDeleteModal()">&times;</span>
+      <h3>Are you sure you want to delete this post?</h3>
+      <form id="deletePostForm" method="POST">
+        {% csrf_token %}
+        <input type="hidden" id="deletePostId" name="post_id">
+        <button type="submit" class="view-btn">Yes, Delete</button>
+        <button type="button" onclick="closePostDeleteModal()" class="view-btn">Cancel</button>
+      </form>
+    </div>
+  </div>
+  
+</div>
+  <!-- Scoped Modal Styles -->
+  <style>
+    /* Only for Add Post Modal */
+    .post-modal {
+      position: fixed;
+      z-index: 1001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .post-modal-content {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+  
+    .post-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+  
+    .post-modal input[type="text"],
+    .post-modal textarea,
+    .post-modal input[type="file"] {
+      display: block;
+      width: 100%;
+      padding: 10px 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+  
+    .post-modal textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+  </style>
+  <script>
+    const addModal = document.getElementById("addPostModal");
+    const editModal = document.getElementById("post_edit");
+    const deleteModal = document.getElementById("post_delete");
+  
+    const editForm = document.getElementById("editPostForm");
+    const deleteForm = document.getElementById("deletePostForm");
+  
+    function openPostModal() {
+      addModal.style.display = "flex";
+    }
+  
+    function closePostModal() {
+      addModal.style.display = "none";
+    }
+  
+    function openPostEditModal(row, pk) {
+      const heading = row.querySelector('td:nth-child(1)').innerText;
+      const content = row.querySelector('td:nth-child(2)').innerText;
+  
+      document.getElementById("editPostHeading").value = heading;
+      document.getElementById("editPostContent").value = content;
+      document.getElementById("editPostId").value = pk;
+  
+      // Set the correct form action
+      editForm.action = `/edit_post/${pk}/`;
+  
+      editModal.style.display = "flex";
+    }
+  
+    function closePostEditModal() {
+      editModal.style.display = "none";
+    }
+  
+    function openPostDeleteModal(pk) {
+      document.getElementById("deletePostId").value = pk;
+      deleteForm.action = `/delete_post/${pk}/`;
+  
+      deleteModal.style.display = "flex";
+    }
+  
+    function closePostDeleteModal() {
+      deleteModal.style.display = "none";
+    }
+  </script>
+  
+  
+  <!-- Post Table -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Heading</th>
+          <th>Content</th>
+          <th>Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example Row -->
+         {%for post in posts %}
+        <tr>
+          <td>{{post.heading}}</td>
+          <td>{{post.content}}</td>
+          <td>{{post.image}}</td>
+          <td>
+            <button type="button" onclick="openPostEditModal(this.closest('tr'), {{ post.pk }})">Edit</button>
+            <button type="button" onclick="openPostDeleteModal({{ post.pk }})">Delete</button>
+          </td>
+          
+        </tr>
+        {% endfor %}
+        <!-- More rows go here -->
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Hidden delete form -->
+  <form id="deleteForm" method="POST" style="display:none;">
+    {% csrf_token %}
+  </form>
+
+  <script>
+    function openEditModal(id) {
+      document.getElementById(`editModal-${id}`).style.display = 'block';
+    }
+
+    function closeModal(id) {
+      document.getElementById(`editModal-${id}`).style.display = 'none';
+    }
+
+    function confirmDelete(id) {
+      if (confirm("Are you sure you want to delete this student?")) {
+        const form = document.getElementById('deleteForm');
+        form.action = `/delete/${id}/`;
+        form.submit();
+      }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+
+</body>
+</html>

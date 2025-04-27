@@ -1,0 +1,167 @@
+
+{% load static %}
+{% block header %}
+{% include 'foresight_app/header.html' %}
+{% endblock %}
+  
+  <div class="learning-header">
+    <h2>Online Learning Modules</h2>
+    <p>Learn about our flagship courses</p>
+  </div>
+  <section class="learning-section ">
+   
+
+    <div class="learning-grid">
+      <div class="course-card">
+        <img src="{% static 'images/reception.png' %}" alt="Course 1">
+        <div class="course-info">
+          <h3>Business Consulting - The Full Course</h3>
+          <p class="price">Free</p>
+          <a href="#" class="view-btn">View Details</a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="{% static 'images/reception.png' %}" alt="Course 2">
+        <div class="course-info">
+          <h3>Business Consulting for Professionals</h3>
+          <p class="price">Free</p>
+          <a href="#" class="view-btn">View Details</a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img src="{% static 'images/reception.png' %}" alt="Course 3">
+        <div class="course-info">
+          <h3>Business Strategy and Consulting</h3>
+          <p class="price">Free</p>
+          <a href="#" class="view-btn">View Details</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="social-sidebar">
+    <!-- <a href="#"><div class="icon facebook"><img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png" alt="Facebook"/></div></a>
+    <a href="#"><div class="icon twitter"><img src="https://img.icons8.com/ios-filled/24/ffffff/x.png" alt="X"/></div></a> -->
+    <a href="#"><div class="icon linkedin"><img src="https://img.icons8.com/ios-filled/24/ffffff/linkedin.png" alt="LinkedIn"/></div></a>
+    <!-- <a href="#"><div class="icon instagram"><img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png" alt="Instagram"/></div></a>
+    <a href="#"><div class="icon phone"><img src="https://img.icons8.com/ios-filled/24/ffffff/phone.png" alt="Phone"/></div></a> -->
+    <a href="https://wa.me/+91 8943876225" target="_blank">
+      <div class="icon whatsapp">
+        <img src="https://img.icons8.com/ios-filled/24/ffffff/whatsapp.png" alt="WhatsApp"/>
+      </div>
+    </a>
+        <!-- <a href="#"><div class="icon google"><img src="https://img.icons8.com/ios-filled/24/ffffff/google-logo.png" alt="Gmail"/></div></a> -->
+  </div>
+  {% block footer %}
+  {% include 'foresight_app/footer.html' %}
+  {% endblock %}
+  <div id="registrationModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModalBtn">&times;</span>
+      <h2>Student Registration Form</h2>
+      <form class="registration-form" action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="fullName" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email Address" required />
+        <input type="tel" name="phone" placeholder="Phone Number" required />
+        <input type="text" name="qualification" placeholder="Educational Qualification" required />
+        <input type="text" name="course" placeholder="Preferred Course" required />
+        <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
+      
+        <div class="custom-file-upload">
+          <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" required />
+          <input type="text" id="fake-file-name" placeholder="No file chosen" readonly />
+          <label for="resume" class="upload-label">Choose Resume</label>
+
+        </div>
+        
+        
+      
+        <button type="submit" class="submit-btn" style="background-color: #000; color: #fff; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+          Submit Registration
+        </button>
+      </form>
+      
+    </div>
+  </div>
+  <script>
+  const resumeInput = document.getElementById('resume');
+const fakeInput = document.getElementById('fake-file-name');
+
+resumeInput.addEventListener('change', function () {
+  const fileName = this.files[0]?.name || "No file chosen";
+  fakeInput.value = fileName;
+});
+
+  </script>
+{% if messages %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    {% for message in messages %}
+      Swal.fire({
+        icon: "{{ message.tags|default:'info' }}",
+        title: "{{ message|escapejs }}",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK"
+      });
+    {% endfor %}
+  });
+</script>
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    const modal = document.getElementById("registrationModal");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+  
+    // Get all buttons that should open the modal
+    const openModalBtns = document.querySelectorAll(".open-modal-btn");
+  
+    // Add event listener to each button
+    openModalBtns.forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        modal.style.display = "block";
+      };
+    });
+  
+    closeModalBtn.onclick = () => {
+      modal.style.display = "none";
+    };
+  
+    window.onclick = (event) => {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+  </script>
+  
+  
+<style>.custom-file-upload {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+.upload-label {
+  background-color: #000000;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#fake-file-name {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+</style>

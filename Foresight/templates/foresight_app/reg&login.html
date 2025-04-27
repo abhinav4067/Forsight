@@ -1,0 +1,235 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/jpg" href="{% static 'images/logo_home.jpg' %}" sizes="64x64">
+
+  <title>Foresight</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #1c1a1a;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #000;
+      padding: 2rem;
+      width: 350px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab {
+      width: 50%;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .tab.active {
+      border-bottom: 2px solid #fff;
+      font-weight: bold;
+    }
+
+    .form {
+      display: none;
+      flex-direction: column;
+    }
+
+    .form.active {
+      display: flex;
+    }
+
+    .form input {
+      background: #1c1a1a;
+      color: #fff;
+      border: 1px solid #444;
+      padding: 10px;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+    }
+
+    .form button {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 10px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form button:hover {
+      background: #ddd;
+    }
+
+    .form a {
+      color: #ccc;
+      font-size: 0.9rem;
+      text-align: right;
+      margin-top: 5px;
+      text-decoration: none;
+    }
+
+    .form a:hover {
+      text-decoration: underline;
+    }
+    .password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* space for the icon */
+  margin-top: 5%;
+}
+
+.password-wrapper .toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #ccc;
+}
+.error-messages {
+    list-style: none;
+    color: red;
+    font-size: 0.9rem;
+  }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="tabs">
+      <div class="tab active" id="login-tab">Login</div>
+      <div class="tab" id="register-tab">Register</div>
+    </div>
+    <form class="form active" id="login-form" method="POST" action="{% url 'admin_login' %}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">
+    
+      {% if active_tab == 'login' and messages %}
+      <div style="text-align: center; margin-bottom: 2%;">
+        <p class="error-messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </p>
+      </div>
+      {% endif %}
+    
+
+      <input type="email" name="email" placeholder="Email" required>
+      <div class="password-wrapper">
+        <input type="password" name="password" id="login-password" placeholder="Password" required>
+        <span class="toggle-password" onclick="togglePassword('login-password', this)">🙉</span>
+      </div>
+      <button type="submit" name="login">Login</button>
+      <a href="{% url 'admin_forget' %}">Forgot Password?</a>
+    </form>
+
+    <form class="form" id="register-form" method="POST" action="{% url 'admin_reg' %}">
+      {% csrf_token %}
+      
+      {% if active_tab == 'register' and form_type == 'register' and messages %}
+
+      <div style="text-align: center; margin-bottom: 2%;">
+        <p class="error-messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </p>
+      </div>
+      {% endif %}
+    
+      <input type="text" name="username" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+    
+      <div class="password-wrapper">
+        <input type="password" name="password" id="register-password" placeholder="Password" required>
+        <span class="toggle-password" onclick="togglePassword('register-password', this)">🙉</span>
+      </div>
+    
+      <div class="password-wrapper">
+        <input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm Password" required>
+        <span class="toggle-password" onclick="togglePassword('confirm-password', this)">🙉</span>
+      </div>
+    
+      <button type="submit" name="register">Register</button>
+    </form>
+  </div>
+<script>function togglePassword(inputId, icon) {
+  const input = document.getElementById(inputId);
+  if (input.type === "password") {
+    input.type = "text";
+    icon.textContent = "🙈";
+  } else {
+    input.type = "password";
+    icon.textContent = "🙉";
+  }
+}
+</script>
+<script>
+  const loginTab = document.getElementById('login-tab');
+  const registerTab = document.getElementById('register-tab');
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+
+  // Function to activate the correct tab
+  function activateTab(tabName) {
+    if (tabName === 'register') {
+      registerTab.classList.add('active');
+      loginTab.classList.remove('active');
+      registerForm.classList.add('active');
+      loginForm.classList.remove('active');
+    } else {
+      loginTab.classList.add('active');
+      registerTab.classList.remove('active');
+      loginForm.classList.add('active');
+      registerForm.classList.remove('active');
+    }
+  }
+
+  // Get active_tab from Django template
+  const activeTab = "{{ active_tab|default:'login' }}";
+
+  // On page load, activate the correct tab
+  activateTab(activeTab);
+
+  // On tab click
+  loginTab.addEventListener('click', () => {
+    activateTab('login');
+  });
+
+  registerTab.addEventListener('click', () => {
+    activateTab('register');
+  });
+</script>
+
+
+</body>
+</html>

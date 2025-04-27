@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Forsight</title>
-  <link rel="icon" type="image/png" href="logo_transperant.png" sizes="64x64">
-  <link rel="stylesheet" href="css/test.css" />
-  <link rel="stylesheet" href="css/style.css" />
+{% load static %}
+
+
 
   <style>
 
@@ -180,33 +174,10 @@
 }
 
   </style>
-</head>
-<body>
 
-  <header>
-    <div class="logo-img-absolute">
-      <img src="images/logo_home.jpg" alt="Logo" width="60">
-    </div>
-    <nav class="navbar">
-      <div class="logo-text-container">
-        <div class="logo">
-          <h1 class="" style="font-size: 20px;">Foresight<span class="dot">.</span></h1>
-          <p class="">Institute of Hotel Management</p>
-        </div>
-      </div>
-      <div class="menu-toggle" id="menu-toggle">&#9776;</div>
-      <ul class="nav-links" id="nav-links">
-        <div class="close-icon" id="menu-close">&times;</div>
-        <a href="index.html" style="margin-top: 2%;">Who We Are</a>
-      <a href="learning_modules.html" style="margin-top: 2%;">Learning Modules</a>
-      <a href="resources.html" style="margin-top: 2%;">Resources</a>
-      <a href="our_team.html" style="margin-top: 2%;">Our Team</a>
-      <a href="contact.html" style="margin-top: 2%;">Contact</a>
-      <a href="reg&login.html" style="margin-top: 2%;" class="login">Log In</a>
-      <a href="#enroll" class="enroll open-modal-btn">Enroll Now</a>    
-      </ul>
-    </nav>
-  </header>
+{% block header %}
+{% include 'foresight_app/header.html' %}
+{% endblock %}
   
   <div class="container">
     <div class="left-section">
@@ -216,18 +187,20 @@
             <hr />
           <p class="subtitle">We are here for questions or consulting</p>
 
-          <form class="contact-form">
+          <form class="contact-form" method="POST" action="">
+            {% csrf_token %}
             <div class="row">
-              <input type="text" placeholder="First Name *" required />
-              <input type="text" placeholder="Last Name *" required />
+              <input type="text" name="first_name" placeholder="First Name *" required />
+              <input type="text" name="last_name" placeholder="Last Name *" required />
             </div>
             <div class="row">
-              <input type="email" placeholder="Email *" required />
-              <input type="tel" placeholder="Phone" />
+              <input type="email" name="email" placeholder="Email *" required />
+              <input type="tel" name="phone" placeholder="Phone" />
             </div>
-            <textarea placeholder="Leave us a message..."></textarea>
+            <textarea name="message" placeholder="Leave us a message..."></textarea>
             <button class="submit-button" type="submit">Submit</button>
           </form>
+          
         </div>
       </div>
 
@@ -244,25 +217,56 @@
     <div class="modal-content">
       <span class="close" id="closeModalBtn">&times;</span>
       <h2>Student Registration Form</h2>
-      <form class="registration-form" onsubmit="event.preventDefault(); alert('Registration Submitted Successfully!'); document.getElementById('registrationModal').style.display = 'none';">
+      <form class="registration-form" action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         <input type="text" name="fullName" placeholder="Full Name" required />
         <input type="email" name="email" placeholder="Email Address" required />
         <input type="tel" name="phone" placeholder="Phone Number" required />
-        <!-- <input type="text" name="address" placeholder="Permanent Address" required /> -->
         <input type="text" name="qualification" placeholder="Educational Qualification" required />
         <input type="text" name="course" placeholder="Preferred Course" required />
         <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
       
-        <!-- ✅ Resume Upload -->
-        <label for="resume" style="color: #000;">Upload Your Resume</label>
-        <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" required />
+        <div class="custom-file-upload">
+          <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" required />
+          <input type="text" id="fake-file-name" placeholder="No file chosen" readonly />
+          <label for="resume" class="upload-label">Choose Resume</label>
+
+        </div>
+        
+        
       
         <button type="submit" class="submit-btn" style="background-color: #000; color: #fff; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
           Submit Registration
         </button>
-              </form>
+      </form>
+      
     </div>
   </div>
+  <script>
+  const resumeInput = document.getElementById('resume');
+const fakeInput = document.getElementById('fake-file-name');
+
+resumeInput.addEventListener('change', function () {
+  const fileName = this.files[0]?.name || "No file chosen";
+  fakeInput.value = fileName;
+});
+
+  </script>
+{% if messages %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    {% for message in messages %}
+      Swal.fire({
+        icon: "{{ message.tags|default:'info' }}",
+        title: "{{ message|escapejs }}",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "OK"
+      });
+    {% endfor %}
+  });
+</script>
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
     const modal = document.getElementById("registrationModal");
@@ -289,128 +293,36 @@
       }
     };
   </script>
-  <section class="cta-section cta-animate">
-    <div class="cta-left" >
-      <div class="logo">
-        <h1 class="animate-left">Foresight<span class="dot">.</span></h1>
-        <p class="animate-left">Institute of Hotel Management</p>
-      </div>
-      <div class="cta-text">
-        <h2 class="animate-left">Join The<br>Success!</h2>
-        <button class="animate-left btn fade-in-up delay-2 open-modal-btn">Enroll Now</button>
-      </div>
-    </div>
   
-    <div class="cta-right">
-      <div class="info-block animate-left">
-        <h3>Info</h3>
-        <p>123-456-7890</p>
-        <p>Info@mysite.com</p>
-      </div>
-      <div class="info-block animate-left">
-        <h3>Address</h3>
-        <p>500 Terry Francine St</p>
-        <p>San Francisco, CA 94158</p>
-      </div>
-      <div class="info-block animate-left">
-        <h3>Follow</h3>
-        <a href="#">LinkedIn</a>
-        <a href="#">Facebook</a>
-        <a href="#">Instagram</a>
-      </div>
-    </div>
   
-    <div class="scroll-top animate-up">
-      <span>&uarr;</span>
-    </div>
-  </section>
-  
-  <style>
-    /* Animation styles */
-    .animate-left,
-    .animate-up {
-      opacity: 0;
-    }
-  
-    @keyframes slideInLeft {
-      from {
-        transform: translateX(-60px);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-  
-    .animate-left.visible {
-      animation: slideInLeft 1s ease-out forwards;
-    }
-  
-    @keyframes slideInUp {
-      from {
-        transform: translateY(60px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-  
-    .animate-up.visible {
-      animation: slideInUp 1s ease-out forwards;
-    }
-  
-    /* Original observer style */
-    .cta-animate {
-      opacity: 0;
-      transform: translateY(100px);
-      transition: all 0.5s ease-out;
-    }
-  
-    .cta-animate.animate {
-      animation: slideInUp 1s ease-out forwards;
-    }
-  </style>
-  
-  <script>
-    // Your existing animation logic for whole section
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate');
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-  
-    const ctaSection = document.querySelector('.cta-animate');
-    observer.observe(ctaSection);
-  
-    // New animation for individual elements only (not borders)
-    const animatedItems = document.querySelectorAll('.animate-left, .animate-up');
-  
-    const animationObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          animationObserver.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.3
-    });
-  
-    animatedItems.forEach(item => animationObserver.observe(item));
-  </script>
-    
-  <footer>
-    <p>© 2025 Foresight. All rights reserved.</p>
-  </footer>
+<style>.custom-file-upload {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 
-  <script src="js/script.js"></script>
-</body>
-</html>
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+.upload-label {
+  background-color: #000000;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#fake-file-name {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+</style>
+
+    {% block footer %}
+    {% include 'foresight_app/footer.html' %}
+    {% endblock %}
