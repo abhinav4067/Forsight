@@ -29,6 +29,10 @@ def resources(request):
 from django.shortcuts import render, redirect
 from .models import Contact
 
+from django.contrib import messages
+from django.shortcuts import redirect, render
+from .models import Contact
+
 def contact(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name', '')
@@ -45,8 +49,11 @@ def contact(request):
                 phone=phone,
                 message=message
             )
-            return redirect('contact')  # Define this route or page
+            messages.success(request, 'Thank you! Your message has been sent successfully.')
+            return redirect('contact')  # Ensure 'contact' URL is correctly named
+
     return render(request, 'foresight_app/contact.html')
+
 
 
 from django.http import JsonResponse

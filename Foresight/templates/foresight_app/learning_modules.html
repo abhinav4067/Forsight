@@ -5,9 +5,108 @@
 {% endblock %}
   
   <div class="learning-header">
-    <h2>Online Learning Modules</h2>
-    <p>Learn about our flagship courses</p>
+    <h2>Learning Modules</h2>
+    <p>Learn about our courses</p>
   </div>
+  <!-- Unique Modal -->
+<div id="courseDetailsModal" class="custom-course-modal">
+  <div class="custom-modal-content">
+    <span class="custom-close" onclick="closeCourseModal()">&times;</span>
+    <h3>Course Duration:</h3>
+    <p><strong>Total Duration:</strong> 1 Year</p>
+    <p><strong>Format:</strong> 2 Semesters (6 months each)</p>
+    <p><strong>Includes:</strong> Theory classes, practical training, industry visits, and internship</p>
+
+    <h3>Core Subjects Covered:</h3>
+
+    <p><strong>1. Front Office Operations</strong><br>
+    Guest handling, check-in/check-out procedures, reservations<br>
+    Use of property management systems (PMS)</p>
+
+    <p><strong>2. Food & Beverage Service</strong><br>
+    Restaurant service techniques<br>
+    Table setup, menu planning, and guest service etiquette</p>
+
+    <p><strong>3. Food Production (Kitchen Operations)</strong><br>
+    Basics of culinary arts<br>
+    Indian and international cuisines<br>
+    Kitchen safety, hygiene, and equipment handling</p>
+
+    <p><strong>4. Housekeeping Operations</strong><br>
+    Room maintenance, laundry management<br>
+    Cleaning methods and materials, inventory control</p>
+
+    <p><strong>5. Communication & Soft Skills</strong><br>
+    English for hospitality<br>
+    Customer service and team dynamics</p>
+
+    <p><strong>6. Hospitality Sales & Marketing Basics (Optional/Elective)</strong><br>
+    Introduction to sales strategies in the hotel industry</p>
+  </div>
+</div>
+<style>
+  .custom-course-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  
+  .custom-modal-content {
+    background-color: #fff;
+    color: black;
+
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+  
+  .custom-close {
+    color: black;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .custom-close:hover {
+    color: #000;
+  }
+  
+  @media (max-width: 600px) {
+    .custom-modal-content {
+      width: 95%;
+      font-size: 14px;
+    }
+  }
+  </style>
+<script>
+  function openCourseModal() {
+    document.getElementById("courseDetailsModal").style.display = "block";
+  }
+  
+  function closeCourseModal() {
+    document.getElementById("courseDetailsModal").style.display = "none";
+  }
+  
+  // Optional: Close when clicking outside the modal
+  window.addEventListener("click", function(event) {
+    const modal = document.getElementById("courseDetailsModal");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+  </script>
+    
   <section class="learning-section ">
    
 
@@ -15,27 +114,28 @@
       <div class="course-card">
         <img src="{% static 'images/reception.png' %}" alt="Course 1">
         <div class="course-info">
-          <h3>Business Consulting - The Full Course</h3>
-          <p class="price">Free</p>
-          <a href="#" class="view-btn">View Details</a>
+          <h3>Hotel Management</h3>
+          <p class="price" style="color: #000;">The proposed 1-Year Diploma in Hotel Management is a job-oriented program designed to provide students with comprehensive knowledge and practical skills across key departments of the hospitality industry. The course is structured to balance classroom instruction with hands-on training, preparing students for immediate employment or further specialization.
+          </p>
+          <a href="#" class="view-btn" onclick="openCourseModal()">View Details</a>
         </div>
       </div>
 
       <div class="course-card">
-        <img src="{% static 'images/reception.png' %}" alt="Course 2">
+        <img src="{% static 'images/bcp.jpg' %}" alt="Course 2">
         <div class="course-info">
           <h3>Business Consulting for Professionals</h3>
-          <p class="price">Free</p>
-          <a href="#" class="view-btn">View Details</a>
+          <!-- <p class="price">Free</p> -->
+          <a href="#" class="view-btn">Upcoming</a>
         </div>
       </div>
 
       <div class="course-card">
-        <img src="{% static 'images/reception.png' %}" alt="Course 3">
+        <img src="{% static 'images/bsc.jpg' %}" alt="Course 3">
         <div class="course-info">
           <h3>Business Strategy and Consulting</h3>
           <p class="price">Free</p>
-          <a href="#" class="view-btn">View Details</a>
+          <a href="#" class="view-btn">Upcoming</a>
         </div>
       </div>
     </div>
@@ -46,11 +146,12 @@
     <a href="#"><div class="icon linkedin"><img src="https://img.icons8.com/ios-filled/24/ffffff/linkedin.png" alt="LinkedIn"/></div></a>
     <!-- <a href="#"><div class="icon instagram"><img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png" alt="Instagram"/></div></a>
     <a href="#"><div class="icon phone"><img src="https://img.icons8.com/ios-filled/24/ffffff/phone.png" alt="Phone"/></div></a> -->
-    <a href="https://wa.me/+91 8943876225" target="_blank">
+    <a href="https://wa.me/919048966026?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20your%20courses." target="_blank">
       <div class="icon whatsapp">
         <img src="https://img.icons8.com/ios-filled/24/ffffff/whatsapp.png" alt="WhatsApp"/>
       </div>
     </a>
+    
         <!-- <a href="#"><div class="icon google"><img src="https://img.icons8.com/ios-filled/24/ffffff/google-logo.png" alt="Gmail"/></div></a> -->
   </div>
   {% block footer %}

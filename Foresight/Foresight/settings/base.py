@@ -17,13 +17,14 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "your-default-key")
 DEBUG = os.getenv("DJANGO_ENV") != "production"
 
 # Hosts
+
 allowed_hosts_env = os.getenv("DJANGO_ALLOWED_HOSTS", "")
 ALLOWED_HOSTS = allowed_hosts_env.split(",") if allowed_hosts_env else []
 
 # CSRF Trusted Origins
-CSRF_TRUSTED_ORIGINS = [
-    f"https://{host}" for host in ALLOWED_HOSTS
-]
+CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
+
+
 
 # Database, Email, and other settings continue below...
 

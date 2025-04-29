@@ -215,7 +215,7 @@
 <body>
 
   <div class="logo-container">
-    <img src="{% static 'images/logo_home.jpg' %}" alt="Logo" class="logo">
+    <img src="{% static 'images/logo_home.png' %}" alt="Logo" class="logo">
   </div>
 
   <!-- Sidebar -->
@@ -259,9 +259,16 @@
         {% for s in students %}
         <tr>
           <td>{{ s.full_name }}</td>
-          <td>{{ s.email }}</td>
-          <td>{{ s.phone }}</td>
-          <td>{{ s.address }}</td>
+          <td>
+            <a href="mailto:{{ enquiry.email }}" style="color: inherit; text-decoration: none;">
+                {{ s.email }}
+            </a>
+          </td>
+          <td onclick="openWhatsApp('{{ s.phone }}')" style="cursor: pointer;">
+            <span style="color: inherit; text-decoration: none;">{{ s.phone }}</span>
+          </td>
+          
+                     <td>{{ s.address }}</td>
           <td>{{ s.qualification }}</td>
           <td>{{ s.course }}</td>
           <td><a href="{{ s.resume.url }}" download>Download CV</a></td>
@@ -302,7 +309,7 @@
   </div>
   <div id="enquiry-section">
     <h2>Enquiries</h2>
-    
+    <p>Note: To reply, just click the email address or phone number (if WhatsApp is available on that number).</p>
     <!-- Search Form for Enquiries -->
     <form method="get" class="search-form" id="enquiry-search-form">
         <input type="text" name="enquiry_q" placeholder="Search by first name" value="{{ query }}">
@@ -342,11 +349,10 @@
                   {{ enquiry.email }}
               </a>
             </td>
-            <td>
-              <a href="tel:{{ enquiry.phone }}" style="color: inherit; text-decoration: none;" onclick="openWhatsApp('{{ enquiry.phone }}')">
-                  {{ enquiry.phone }}
-              </a>
-            </td>
+            <td onclick="openWhatsApp('{{ enquiry.phone }}')" style="cursor: pointer;">
+                <span style="color: inherit; text-decoration: none;">{{ enquiry.phone }}</span>
+              </td>
+              
             <td>{{ enquiry.message }}</td>
             <td>
               <input type="checkbox"
@@ -361,24 +367,23 @@
   </div>
   
   <script>
-    // Update replied status for enquiries
-    function updateReplied(checkbox, id) {
-      fetch("{% url 'toggle_replied' %}", {
-        method: 'POST',
-        headers: {
-          'X-CSRFToken': '{{ csrf_token }}',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `id=${id}&replied=${checkbox.checked}`
-      }).then(res => res.json())
-        .then(data => console.log(data));
-    }
-  
-    // Open WhatsApp chat with phone number
     function openWhatsApp(phoneNumber) {
+      // Ensure phone number is in international format, e.g. +91xxxxxxxxxx
+      const formattedNumber = phoneNumber.replace(/[^0-9]/g, ''); // Remove non-numeric chars
       const message = "Hello, I'd like to get in touch!";
-      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-      window.open(url, '_blank');
+      const whatsappURL = `https://wa.me/${formattedNumber}?text=${encodeURIComponent(message)}`;
+  
+      // Try opening using WhatsApp URI scheme
+      const fallbackURL = whatsappURL;
+      const appURL = `whatsapp://send?phone=${formattedNumber}&text=${encodeURIComponent(message)}`;
+  
+      // First try opening via app (will only work on mobile or with WhatsApp Desktop installed)
+      window.location.href = appURL;
+  
+      // Fallback to wa.me in new tab after 2 seconds (if app doesn't open)
+      setTimeout(() => {
+        window.open(fallbackURL, '_blank');
+      }, 2000);
     }
   </script>
   
