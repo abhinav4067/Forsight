@@ -252,6 +252,7 @@
       
   
     <div class="table-container">
+        {% if students %}
       <table>
         <tr>
           <th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Qualification</th><th>Course</th><th>Resume</th><th>Actions</th>
@@ -305,6 +306,9 @@
         </div>
         {% endfor %}
       </table>
+      {% else %}
+      <p style="text-align: center; font-weight: bold; margin-top: 20px;">No student records found.</p>
+      {% endif %}
     </div>
   </div>
   <div id="enquiry-section">
@@ -326,6 +330,7 @@
     
     <!-- Enquiries Table -->
     <div class="table-container">
+        {% if enquiries %}
       <table>
         <thead>
           <tr>
@@ -363,6 +368,9 @@
           {% endfor %}
         </tbody>
       </table>
+      {% else %}
+      <p style="text-align: center; font-weight: bold; margin-top: 20px;">No enquiries found.</p>
+      {% endif %}
     </div>
   </div>
   
@@ -543,6 +551,7 @@
   
   <!-- Post Table -->
   <div class="table-container">
+    {% if posts %}
     <table>
       <thead>
         <tr>
@@ -569,6 +578,9 @@
         <!-- More rows go here -->
       </tbody>
     </table>
+    {% else %}
+    <p style="text-align: center; font-weight: bold; margin-top: 20px;">No posts found.</p>
+    {% endif %}
   </div>
   
   <!-- Hidden delete form -->
