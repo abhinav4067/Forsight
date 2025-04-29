@@ -272,7 +272,14 @@
                      <td>{{ s.address }}</td>
           <td>{{ s.qualification }}</td>
           <td>{{ s.course }}</td>
-          <td><a href="{{ s.resume.url }}" download>Download CV</a></td>
+          <td>
+            {% if s.resume %}
+              <a href="{{ s.resume.url }}" download>Download CV</a>
+            {% else %}
+              No Resume
+            {% endif %}
+          </td>
+          
           <td>
             <button onclick="openEditModal({{ s.id }})">Edit</button>
             <button onclick="confirmDelete({{ s.id }})">Delete</button>
