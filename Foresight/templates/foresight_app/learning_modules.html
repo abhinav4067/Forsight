@@ -167,15 +167,12 @@
         <input type="email" name="email" placeholder="Email Address" required />
         <input type="tel" name="phone" placeholder="Phone Number" required />
         <input type="text" name="qualification" placeholder="Educational Qualification" required />
-        <input type="text" name="course" placeholder="Preferred Course" required />
-        <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
+        <select name="course" required>
+          <option value="Hotel Management">Hotel Management</option>
+        </select>
+                <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
       
-        <div class="custom-file-upload">
-          <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" required />
-          <input type="text" id="fake-file-name" placeholder="No file chosen" readonly />
-          <label for="resume" class="upload-label">Choose Resume</label>
 
-        </div>
         
         
       
@@ -186,16 +183,7 @@
       
     </div>
   </div>
-  <script>
-  const resumeInput = document.getElementById('resume');
-const fakeInput = document.getElementById('fake-file-name');
-
-resumeInput.addEventListener('change', function () {
-  const fileName = this.files[0]?.name || "No file chosen";
-  fakeInput.value = fileName;
-});
-
-  </script>
+ 
 {% if messages %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {

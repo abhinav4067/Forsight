@@ -11,7 +11,7 @@ class StudentRegistration(models.Model):
     address = models.TextField()
     qualification = models.CharField(max_length=100)
     course = models.CharField(max_length=100)
-    resume = models.FileField(upload_to='resumes/')
+    # resume = models.FileField(upload_to='resumes/')
     created_at = models.DateTimeField(default=timezone.now)
 
 

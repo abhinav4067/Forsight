@@ -255,7 +255,7 @@
         {% if students %}
       <table>
         <tr>
-          <th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Qualification</th><th>Course</th><th>Resume</th><th>Actions</th>
+          <th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Qualification</th><th>Course</th><th>Actions</th>
         </tr>
         {% for s in students %}
         <tr>
@@ -272,13 +272,7 @@
                      <td>{{ s.address }}</td>
           <td>{{ s.qualification }}</td>
           <td>{{ s.course }}</td>
-          <td>
-            {% if s.resume %}
-              <a href="{{ s.resume.url }}" download>Download CV</a>
-            {% else %}
-              No Resume
-            {% endif %}
-          </td>
+       
           
           <td>
             <button onclick="openEditModal({{ s.id }})">Edit</button>
@@ -303,10 +297,9 @@
               <input id="address" name="address" value="{{ s.address }}">
               <label for="qualification">Qualification</label>
               <input id="qualification" name="qualification" value="{{ s.qualification }}">
-              <label for="course">Preferred Job</label>
+              <label for="course">Preferred Course</label>
               <input id="course" name="course" value="{{ s.course }}">
-              <label for="resume">Upload Resume</label>
-              <input type="file" name="resume" id="resume">
+            
               <button type="submit">Update</button>
             </form>
           </div>

@@ -89,7 +89,6 @@ def student_registration_view(request):
             address = request.POST.get('address')
             qualification = request.POST.get('qualification')
             course = request.POST.get('course')
-            resume = request.FILES.get('resume')
 
             StudentRegistration.objects.create(
                 full_name=full_name,
@@ -98,7 +97,6 @@ def student_registration_view(request):
                 address=address,
                 qualification=qualification,
                 course=course,
-                resume=resume
             )
 
             messages.success(request, 'Registration submitted successfully!')
@@ -344,11 +342,6 @@ def export_enquiries_pdf(request):
 
 def delete_student(request, pk):
     student = get_object_or_404(StudentRegistration, pk=pk)
-    
-    # Delete resume file from the filesystem if it exists
-    if student.resume and os.path.isfile(student.resume.path):
-        os.remove(student.resume.path)
-        
     student.delete()
     return redirect('dashboard')
 
@@ -358,18 +351,12 @@ def edit_student(request, pk):
     if request.method == 'POST':
         for field in ['full_name', 'email', 'phone', 'address', 'qualification', 'course']:
             setattr(student, field, request.POST.get(field))
-
-        if 'resume' in request.FILES:
-            # Delete old resume if it exists
-            if student.resume and os.path.isfile(student.resume.path):
-                os.remove(student.resume.path)
-            # Save new resume
-            student.resume = request.FILES['resume']
         
         student.save()
         return redirect('dashboard')
 
     return render(request, 'edit_student.html', {'student': student})
+
 
 
 def export_students_csv(request):
