@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'foresight_app'
+    'foresight_app',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
