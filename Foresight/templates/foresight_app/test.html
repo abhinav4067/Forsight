@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Application Form</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 25px;
+    }
+
+    .form-group.full {
+      flex-direction: column;
+    }
+
+    .field {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .required {
+      color: red;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="date"],
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 150px;
+      resize: none;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 8px;
+    }
+
+    .radio-group label {
+      font-weight: normal;
+    }
+
+    .disclaimer {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .checkbox {
+      margin: 20px 0;
+    }
+
+    .checkbox input {
+      margin-right: 10px;
+    }
+
+    .success-message {
+      color: green;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+    }
+
+    .submit-btn button {
+      background: #d9534f;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .form-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+    <script>
+        document.getElementById("admission-form").addEventListener("submit", function (e) {
+          e.preventDefault(); // Prevent actual form submission
+      
+          // Show success message
+          document.getElementById("success-message").style.display = "block";
+      
+          // Optionally disable form inputs or button to prevent re-submission
+          this.querySelector("button[type='submit']").disabled = true;
+        });
+      </script>
+      
+
+  <div class="container">
+    <h2>Application Form.</h2>
+    
+    <form id="admission-form">
+      <div class="form-group">
+        <div class="field">
+          <label>Name <span class="required">*</span></label>
+          <input type="text" placeholder="Your Name" required>
+        </div>
+        <div class="field">
+          <label>Mobile <span class="required">*</span></label>
+          <input type="tel" placeholder="Your Mobile Number" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="field">
+          <label>Guardian Mobile <span class="required">*</span></label>
+          <input type="tel" placeholder="Guardian Mobile Number" required>
+        </div>
+        <div class="field">
+          <label>Gender <span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="gender"> Male</label>
+            <label><input type="radio" name="gender"> Female</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="field">
+          <label>Date of Birth <span class="required">*</span></label>
+          <input type="text" placeholder="Your DOB" required>
+        </div>
+        <div class="field">
+          <label>Educational Qualification <span class="required">*</span></label>
+          <div class="radio-group">
+            <label><input type="radio" name="qualification"> SSLC</label>
+            <label><input type="radio" name="qualification"> Plus Two</label>
+            <label><input type="radio" name="qualification"> Graduation or above</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group full">
+        <label>Courses Offered <span class="required">*</span></label>
+        <div class="radio-group">
+          <label><input type="radio" name="course"> Diploma In Hotel Management</label>
+          <label><input type="radio" name="course"> Diploma in Food Production</label>
+          <label><input type="radio" name="course"> Diploma in Professional Cookery</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="field">
+          <label>Whatsapp Number <span class="required">*</span></label>
+          <input type="tel" placeholder="Your Whatsapp Number" required>
+        </div>
+        <div class="field">
+          <label>Adhaar Number <span class="required">*</span></label>
+          <input type="text" placeholder="Your Adhaar Number" required>
+        </div>
+      </div>
+
+      <div class="form-group full">
+        <label>Address for Communication <span class="required">*</span></label>
+        <textarea placeholder="Your Address" required></textarea>
+      </div>
+
+      <div class="disclaimer">
+        I understood that the admission fee is Rs. 1000 and it will not be refunded under any circumstances <span class="required">*</span>
+      </div>
+
+      <div class="checkbox">
+        <label><input type="checkbox" required> Terms and Conditions agreed</label>
+      </div>
+
+      <div class="success-message" id="success-message" style="display: none;">
+        <p>Thank you.<br>
+        You have successfully submitted your admission enquiry<br>
+        • Our team will respond to you within 24 - 48 hours.</p>
+      </div>
+    
+      <div class="submit-btn">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>

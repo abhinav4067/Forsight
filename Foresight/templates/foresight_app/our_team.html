@@ -16,22 +16,40 @@
         <div class="course-card">
             <img src="{% static 'images/manager.jpg' %}" alt="Blog Image">
             <div class="course-info">
-             
-              
               <h3>Anil Kumar: Managing Director</h3>
-
               <p class="subtitle">
                 Anil Kumar,  Leader in Cruise Ship Careers and Global Hospitality, is a visionary in cruise ship careers and global hospitality. From 2004 to 2014, he built a strong foundation with Royal Caribbean Cruise Company. Drawing on that decade of experience, he established a successful venture connecting talent with careers at sea. With over 11 years in cruise ship recruitment, Anil has helped place 500+ professionals on top cruise lines. His passion for empowering individuals and setting high standards continues to shape the future of cruise industry employment.
               </p>
-              
-              
-            
             </div>
           </div>
+          <div class="course-card">
+            <!-- Default icon from Flaticon when photo is unavailable -->
+            <div class="course-info">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Instructor Icon" style="display: block; margin: 0 auto; width: 300px; height: 300px;">
+            </div>
+            <div class="course-info">
+                <h3>Shibin Lal: Instructor</h3>
+                <p class="subtitle">
+                    Shibin Lal, with 6 years of experience as a Front Office Specialist, has honed his expertise while working in several prestigious hotels and resorts across the Middle Eastern countries. His journey in the hospitality industry has been marked by his commitment to providing exceptional customer service and managing front office operations at international standards. Shibin’s in-depth knowledge of hotel management and passion for delivering excellence makes him a key figure in shaping the next generation of hospitality professionals.
+                </p>
+            </div>
+        </div>
         
-          
-          
-          
+        <div class="course-card">
+            <!-- Default icon from Flaticon when photo is unavailable -->
+            <div class="course-info">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Instructor Icon" style="display: block; margin: 0 auto; width: 300px; height: 300px;">
+            </div>
+            <div class="course-info">
+                <h3>Ratheesh Kumar: Instructor</h3>
+                <p class="subtitle">
+                    Ratheesh Kumar, a seasoned professional with 8 years of experience in the Food and Beverage (F&B) services industry, has a deep understanding of high-end hospitality operations. Over the years, Ratheesh has worked with renowned restaurants and luxury resorts, mastering the art of creating exceptional dining experiences for guests. His expertise in managing F&B departments, alongside his passion for training future leaders in the hospitality field, ensures that students gain the practical knowledge required to excel in the competitive world of food and beverage services.
+                </p>
+            </div>
+        </div>
+        
+        
+        
     </div>
   </section>
   <div class="social-sidebar">
@@ -52,31 +70,7 @@
   {% include 'foresight_app/footer.html' %}
   {% endblock %}
 
-  <div id="registrationModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeModalBtn">&times;</span>
-      <h2>Student Registration Form</h2>
-      <form class="registration-form" action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="text" name="fullName" placeholder="Full Name" required />
-        <input type="email" name="email" placeholder="Email Address" required />
-        <input type="tel" name="phone" placeholder="Phone Number" required />
-        <input type="text" name="qualification" placeholder="Educational Qualification" required />
-        <select name="course" required>
-          <option value="Hotel Management">Hotel Management</option>
-        </select>
-                <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
-      
-
-        
-      
-        <button type="submit" class="submit-btn" style="background-color: #000; color: #fff; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
-          Submit Registration
-        </button>
-      </form>
-      
-    </div>
-  </div>
+ 
 
 {% if messages %}
 <script>
@@ -94,60 +88,6 @@
 {% endif %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script>
-    const modal = document.getElementById("registrationModal");
-    const closeModalBtn = document.getElementById("closeModalBtn");
-  
-    // Get all buttons that should open the modal
-    const openModalBtns = document.querySelectorAll(".open-modal-btn");
-  
-    // Add event listener to each button
-    openModalBtns.forEach(btn => {
-      btn.onclick = (e) => {
-        e.preventDefault();
-        modal.style.display = "block";
-      };
-    });
-  
-    closeModalBtn.onclick = () => {
-      modal.style.display = "none";
-    };
-  
-    window.onclick = (event) => {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    };
-  </script>
-  
-  
-<style>.custom-file-upload {
-  position: relative;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.custom-file-upload input[type="file"] {
-  display: none;
-}
-
-.upload-label {
-  background-color: #000000;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-#fake-file-name {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-</style>
-  
+ 
 </body>
 </html>

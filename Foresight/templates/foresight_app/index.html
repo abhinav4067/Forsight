@@ -1,16 +1,59 @@
 {% load static %}
+{% include "foresight_app/admission_modal.html" %}
+
 {% block header %}
 {% include 'foresight_app/header.html' %}
 {% endblock %}
 
   
   <section class="hero" style="background-image: url('{% static "images/building3.jpg" %}');">
-
     <div class="hero-content">
       <h1 class="fade-in-up">Foresight Institute of Hotel Management</h1>
-      <p class="fade-in-up delay-1">The destination for leaders who seek to change the world</p>
-      <a href="#enroll" class="btn fade-in-up delay-2 open-modal-btn">Enroll Now</a>
+      <p class="fade-in-up delay-1">Start with Hospitality, Graduate with Opportunity</p>
+      <a href="#enroll" onclick="openForm()" class="btn fade-in-up delay-2">Enroll Now</a>
     </div>
+    
+    <style>
+      .hero-content {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 40px;
+        border-radius: 10px;
+        color: white;
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+      }
+    
+      .hero-content h1 {
+        font-size: 3rem; /* Increased font size for the header */
+      }
+    
+      .hero-content p {
+        font-size: 1.5rem; /* Increased font size for the paragraph */
+      }
+    
+      .hero-content .btn {
+        font-size: 1.2rem; /* Increased font size for the button */
+      }
+    
+      /* Mobile view: move the box higher */
+      @media (max-width: 768px) {
+        .hero-content {
+          margin-bottom: 51px; /* reduced top margin for mobile */
+        }
+        .hero-content h1 {
+          font-size: 2.8rem; /* Adjusted header font size for mobile */
+        }
+        .hero-content p {
+          font-size: 1.3rem; /* Adjusted paragraph font size for mobile */
+        }
+        .hero-content .btn {
+          font-size: 1rem; /* Adjusted button font size for mobile */
+        }
+      }
+    </style>
+    
+    
   </section>
 
   <style>
@@ -39,34 +82,41 @@
   </style>
   
   <section class="enroll-section">
+    <h1 style="color: #333; text-align: center; margin-bottom: 20px; font-size: 36px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;" class="">Why enroll in our programs? 🤔</h1>
+
     <div class="container">
+
       <div class="enroll-grid">
         <div class="enroll-item" style="border-right: solid 1px black; border-bottom: solid 1px black;">
-          <div class="icon-box slide-in-left"></div>
-          <h1 style="color: black;" class="slide-in-left">Why Enroll in Our Programs?</h1>
-          <p class="slide-in-left">Unlock your potential with industry-relevant skills and expert-led training.
-            Join a community dedicated to your personal and professional growth.</p>
-
+            <a href="https://www.flaticon.com/free-icons/academic" title="academic icons">
+                <img src="https://cdn-icons-png.flaticon.com/512/1155/1155084.png" alt="Academic Icon" style="width: 50px; height: 50px;">
+            </a>
+            <h3 style="color: black;" class="slide-in-left">BSS APPROVED and curriculum based on American Culinary Federation standard</h3>
+            <p class="slide-in-left">FIHM’s Diploma in Hotel Management is approved by Bharat Sevak Samaj (BSS), a national development agency promoted by the Government of India. Our curriculum is thoughtfully designed in alignment with standards set by the American Culinary Federation (ACF), ensuring students receive a globally relevant education, blending national certification with world-class culinary and hospitality training to equip them for a successful career.</p>
         </div>
         <div class="enroll-item" style="border-bottom: solid 1px black;">
-          <div class="icon-box purple slide-in-left" style="margin-left: 8%;"></div>
-          <h3 class="slide-in-left" style="margin-left: 8%;">Simple Online Enrollment</h3>
-          <p class="slide-in-left" style="margin-left: 8%;">Easily register through our user-friendly online form.
-            Start your journey in just a few clicks—no hassle, no delays.</p>
+            <a href="https://www.flaticon.com/free-icons/cooking" title="cooking icons">
+                <img src="https://cdn-icons-png.flaticon.com/512/2965/2965553.png" alt="Cooking Icon" style="width: 50px; height: 50px;">
+            </a>
+            <h3 class="slide-in-left" style="margin-left: 8%;">Hands-on training and internships with remuneration</h3>
+            <p class="slide-in-left" style="margin-left: 8%;">Our students benefit from real-world internship opportunities at leading hotels, resorts, and restaurants, gaining crucial practical experience in hospitality. These internships are designed to ensure students build skills through hands-on training, while also receiving remuneration to support their learning journey. This program bridges classroom education with real industry practice.</p>
         </div>
         <div class="enroll-item" style="border-right: solid 1px black;">
-          <div class="icon-box half slide-in-left"></div>
-          <h3 class="slide-in-left">Professional Mentors</h3>
-          <p class="slide-in-left">Learn from experienced mentors who bring real-world expertise to every session.
-            Get personalized guidance to help you succeed in your chosen field.</p>
-        </div>
-        <div class="enroll-item">
-          <div class="icon-box border-only slide-in-left" style="margin-left: 8%;"></div>
-          <h3 class="slide-in-left" style="margin-left: 8%;">BSS Approved Diploma</h3>
-          <p class="slide-in-left" style="margin-left: 8%;">Earn a diploma approved by Bharat Sevak Samaj (BSS), recognized for its credibility and value in skill development and employment opportunities.</p>
-        </div>
-        
+          <img src="{% static 'images/field3.jpg' %}" alt="Practical Lab Icon" style="width: 50px; height: 50px;">
+          <h3 class="slide-in-left">State-of-the-Art Practical Lab for On-Campus Training</h3>
+          <p class="slide-in-left">Our on-campus training lab provides a comprehensive platform for students to practice food production, service techniques, and housekeeping. With state-of-the-art facilities and real-life training scenarios, our students develop essential skills to excel in the hospitality industry, ensuring they are fully prepared for the dynamic challenges of their future careers.</p>
       </div>
+      
+        <div class="enroll-item">
+            <a href="https://www.flaticon.com/free-icons/job" title="job icons">
+                <img src="https://cdn-icons-png.flaticon.com/512/185/185971.png" alt="Job Icon" style="width: 50px; height: 50px;">
+            </a>
+            <h3 class="slide-in-left" style="margin-left: 8%;">Placement support in India, abroad, and on cruise ships</h3>
+            <p class="slide-in-left" style="margin-left: 8%;">At FIHM, we are committed to providing our students with exceptional placement opportunities both within India and internationally. Our Placement Cell collaborates with top hotels, resorts, and restaurants, as well as offering specialized placement support for cruise ship careers. With a strong global network, we ensure that each student is prepared and positioned for success in the hospitality industry.</p>
+        </div>
+    </div>
+        
+        
     </div>
   </section>
   <style>@media (max-width: 768px) {
@@ -125,26 +175,18 @@
     <div class="container">
       <div class="academics-header">
         <h2>Our Academics</h2>
-        <p >At Foresight Institute of Hotel Management, we provide a dynamic curriculum that blends practical skills and theoretical knowledge, preparing students to excel in the global hospitality industry.</p>
+        <p>At Foresight Institute of Hotel Management, we provide a dynamic curriculum that blends practical skills and theoretical knowledge, preparing students to excel in the global hospitality industry.</p>
       </div>
-      
-      
-      <div class="academics-grid">
+  
+      <div class="academics-grid" style="display: flex; justify-content: center;">
         <div class="academics-card">
           <h3>Hotel Management</h3>
           <a href="{% url 'learning_modules' %}" class="view-btn">View Details</a>
         </div>
-        <div class="academics-card">
-          <h3>Housekeeping (Specialization)</h3>
-          <a href="{% url 'learning_modules' %}" class="view-btn">Upcoming</a>
-        </div>
-        <div class="academics-card">
-          <h3>Commi(Specialization)</h3>
-          <a href="{% url 'learning_modules' %}" class="view-btn">Upcoming</a>
-        </div>
-       
+      </div>
     </div>
   </section>
+  
   
   <section class="quote-section"  >
     <div class="quote-overlay">
@@ -162,29 +204,6 @@
   {% block footer %}
   {% include 'foresight_app/footer.html' %}
   {% endblock %}
-  <div id="registrationModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeModalBtn">&times;</span>
-      <h2>Student Registration Form</h2>
-      <form class="registration-form" action="{% url 'register' %}" method="POST">
-        {% csrf_token %}
-        <input type="text" name="fullName" placeholder="Full Name" required />
-        <input type="email" name="email" placeholder="Email Address" required />
-        <input type="tel" name="phone" placeholder="Phone Number" required />
-        <input type="text" name="qualification" placeholder="Educational Qualification" required />
-        <select name="course" required>
-          <option value="Hotel Management">Hotel Management</option>
-        </select>
-                <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
-      
-        <button type="submit" class="submit-btn" style="background-color: #000; color: #fff; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
-          Submit Registration
-        </button>
-      </form>
-      
-      
-    </div>
-  </div>
   
 {% if messages %}
 <script>
@@ -202,58 +221,4 @@
 {% endif %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script>
-    const modal = document.getElementById("registrationModal");
-    const closeModalBtn = document.getElementById("closeModalBtn");
-  
-    // Get all buttons that should open the modal
-    const openModalBtns = document.querySelectorAll(".open-modal-btn");
-  
-    // Add event listener to each button
-    openModalBtns.forEach(btn => {
-      btn.onclick = (e) => {
-        e.preventDefault();
-        modal.style.display = "block";
-      };
-    });
-  
-    closeModalBtn.onclick = () => {
-      modal.style.display = "none";
-    };
-  
-    window.onclick = (event) => {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    };
-  </script>
-  
-  
-<style>.custom-file-upload {
-  position: relative;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.custom-file-upload input[type="file"] {
-  display: none;
-}
-
-.upload-label {
-  background-color: #000000;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-#fake-file-name {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-</style>
-
+ 

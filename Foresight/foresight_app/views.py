@@ -79,34 +79,89 @@ def learning_modules(request):
     return render(request, 'foresight_app/learning_modules.html')
 
 
-
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import StudentRegistration
 def student_registration_view(request):
     if request.method == 'POST':
         try:
-            full_name = request.POST.get('fullName')
-            email = request.POST.get('email')
+            full_name = request.POST.get('name')
             phone = request.POST.get('phone')
-            address = request.POST.get('address')
+            whatsapp = request.POST.get('whatsapp')
+            father_name = request.POST.get('father_name')
+            father_phone = request.POST.get('father_phone')
+            mother_name = request.POST.get('mother_name')
+            mother_phone = request.POST.get('mother_phone')
+            gender = request.POST.get('gender')
+            dob = request.POST.get('dob')
             qualification = request.POST.get('qualification')
             course = request.POST.get('course')
+            address = request.POST.get('address')
+            adhaar_number = request.POST.get('adhaar')
+            photo = request.FILES.get('photo')
+            email = request.POST.get('email')
+
+            # Academic Info
+            college_name = request.POST.get('college_name')
+            college_year = request.POST.get('college_year')
+            college_score = request.POST.get('college_score')
+
+            school_12 = request.POST.get('school_12')
+            year_12 = request.POST.get('year_12')
+            score_12 = request.POST.get('score_12')
+            school_10 = request.POST.get('school_10')
+            year_10 = request.POST.get('year_10')
+            score_10 = request.POST.get('score_10')
+            achievements = request.POST.get('achievements')
+
+            # Work Experience
+            company_name = request.POST.get('company_name')
+            position = request.POST.get('position')
+            work_from = request.POST.get('work_from')
+            work_to = request.POST.get('work_to')
 
             StudentRegistration.objects.create(
                 full_name=full_name,
-                email=email,
                 phone=phone,
-                address=address,
+                whatsapp=whatsapp,
+                father_name=father_name,
+                father_phone=father_phone,
+                mother_name=mother_name,
+                mother_phone=mother_phone,
+                gender=gender,
+                dob=dob,
                 qualification=qualification,
                 course=course,
+                address=address,
+                adhaar_number=adhaar_number,
+                photo=photo,
+                email=email,
+                college_name=college_name,
+                college_year=college_year,
+                college_score=college_score,
+                
+                school_12=school_12,
+                year_12=year_12,
+                score_12=score_12,
+                school_10=school_10,
+                year_10=year_10,
+                score_10=score_10,
+                achievements=achievements,
+                company_name=company_name,
+                position=position,
+                work_from=work_from,
+                work_to=work_to
             )
 
             messages.success(request, 'Registration submitted successfully!')
-            return redirect('home')  # 👈 change here
+            return redirect('home')
 
         except Exception as e:
             messages.error(request, f"Error: {e}")
-            return redirect('home')  # 👈 same change here
+            return redirect('home')
 
-    return redirect('home')  # default fallback
+    return redirect('home')
+
 
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
@@ -166,6 +221,56 @@ def dashboard(request):
         'enquiry_date_to': enquiry_date_to,
         'posts':posts
     })
+
+
+from django.http import JsonResponse, Http404
+from django.http import JsonResponse, Http404
+
+def student_details_json(request, student_id):
+    try:
+        student = StudentRegistration.objects.get(id=student_id)
+        data = {
+            'full_name': student.full_name,
+            'email': student.email,
+            'phone': str(student.phone) if student.phone else '',
+            'whatsapp': str(student.whatsapp) if student.whatsapp else '',
+            'father_name': student.father_name,
+            'father_phone': str(student.father_phone) if student.father_phone else '',
+            'mother_name': student.mother_name,
+            'mother_phone': str(student.mother_phone) if student.mother_phone else '',
+            'gender': student.gender,
+            'dob': student.dob.strftime('%Y-%m-%d') if student.dob else '',
+            'qualification': student.qualification,
+            'course': student.course,
+            'address': student.address,
+            'adhaar_number': student.adhaar_number,
+            'photo': student.photo.url if student.photo else '',
+
+            # Academic Info
+            'college_name': student.college_name,
+            'college_year': student.college_year,
+            'college_score': student.college_score,
+            'school_12': student.school_12,
+            'year_12': student.year_12,
+            'score_12': student.score_12,
+            'school_10': student.school_10,
+            'year_10': student.year_10,
+            'score_10': student.score_10,
+            'achievements': student.achievements,
+
+            # Work Experience
+            'company_name': student.company_name,
+            'position': student.position,
+            'work_from': student.work_from,
+            'work_to': student.work_to,
+
+            # Timestamp
+            'created_at': student.created_at.strftime('%Y-%m-%d %H:%M:%S') if student.created_at else '',
+        }
+        return JsonResponse(data)
+    except StudentRegistration.DoesNotExist:
+        raise Http404("Student not found")
+
 
 import datetime
 
@@ -340,19 +445,58 @@ def export_enquiries_pdf(request):
 
 
 
+from django.core.files.storage import default_storage
+import os
+
 def delete_student(request, pk):
     student = get_object_or_404(StudentRegistration, pk=pk)
+
+    # Check if the student has a profile picture and delete it
+    if student.photo:
+        # Get the path to the image and delete it
+        image_path = student.photo.path
+        if os.path.exists(image_path):
+            default_storage.delete(image_path)
+
+    # Now delete the student record
     student.delete()
+
     return redirect('dashboard')
+
+
+from django.core.files.storage import default_storage
+import os
 
 def edit_student(request, pk):
     student = get_object_or_404(StudentRegistration, pk=pk)
-    
+
     if request.method == 'POST':
-        for field in ['full_name', 'email', 'phone', 'address', 'qualification', 'course']:
-            setattr(student, field, request.POST.get(field))
+        # Update all the fields
+        fields = [
+            'full_name', 'email', 'phone', 'whatsapp', 'father_name', 'father_phone', 
+            'mother_name', 'mother_phone', 'gender', 'dob', 'qualification', 'course', 
+            'address', 'adhaar_number', 'college_name', 'college_year', 'college_score', 
+            'school_12', 'year_12', 'score_12', 'school_10', 'year_10', 'score_10', 
+            'achievements', 'company_name', 'position', 'work_from', 'work_to'
+        ]
         
+        for field in fields:
+            setattr(student, field, request.POST.get(field))
+
+        # Handle the profile picture update
+        if 'photo' in request.FILES:
+            # If a new photo is uploaded, delete the old one
+            if student.photo:
+                # Get the path to the old image and delete it
+                old_image_path = student.photo.path
+                if os.path.exists(old_image_path):
+                    default_storage.delete(old_image_path)
+
+            # Save the new photo
+            student.photo = request.FILES['photo']
+
         student.save()
+
         return redirect('dashboard')
 
     return render(request, 'edit_student.html', {'student': student})
@@ -678,3 +822,7 @@ def toggle_replied(request):
         return JsonResponse({'status': 'success', 'replied': enquiry.replied})
     
     return JsonResponse({'status': 'fail'}, status=400)
+
+
+def admission(request):
+    return render(request, 'foresight_app/admission.html')

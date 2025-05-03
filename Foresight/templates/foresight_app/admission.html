@@ -1,0 +1,239 @@
+{% load static %}
+{% block header %}
+{% include 'foresight_app/header.html' %}
+{% endblock %}
+{% include "foresight_app/admission_modal.html" %}
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #fff;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #fff;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    h2::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #fff;
+      margin-top: 8px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+      background: #111;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+      animation: fadeInUp 0.8s ease-in-out both;
+    }
+
+    .apply-options {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .option-box {
+      background-color: #1c1c1c;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      transition: all 0.4s ease;
+    }
+
+    .option-box:hover {
+      transform: scale(1.03);
+      border-color: #fff;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      margin-top: 10px;
+      background: #fff;
+      color: #000;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #555;
+      color: #fff;
+    }
+
+    /* FAQ Styles */
+    .faq-item {
+      border-bottom: 1px solid #444;
+      margin-bottom: 15px;
+      padding: 10px 0;
+    }
+
+    .faq-question {
+      cursor: pointer;
+      font-weight: bold;
+      position: relative;
+      padding-right: 25px;
+    }
+
+    .faq-question::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-question::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+      opacity: 0;
+      color: #ccc;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      opacity: 1;
+    }
+
+    @media (min-width: 768px) {
+      .apply-options {
+        flex-direction: row;
+      }
+      .option-box {
+        flex: 1;
+      }
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <div class="section">
+    <h2>How to Apply</h2>
+    <p>Admissions to the Diploma in Hotel Management at FIHM can be done online or offline. Choose the mode that best suits you.</p>
+  </div>
+
+  <div class="section">
+    <h2>Admission Criteria</h2>
+    <p>Applicants must have passed Class 12 or equivalent. No prior experience in hotel management is required. School dropouts and other backgrounds are also welcome.</p>
+  </div>
+
+  <div class="section">
+    <h2>Application Options</h2>
+    <div class="apply-options">
+      <div class="option-box">
+        <h3>Offline Application</h3>
+        <p>Contact: <strong>8943876225</strong></p>
+        <a href="{% static 'forms/FIHM_Application_Form.pdf' %}" class="btn" download>
+            Download Application Form (PDF)
+          </a>
+          
+                </div>
+
+                <div class="option-box">
+                    <h3>Online Application</h3>
+                    <a href="#" class="btn" onclick="openForm()">Click Here to Enroll</a>
+                  </div>
+    </div>
+  </div>
+ <!-- Modal Form -->
+ 
+
+  <div class="section">
+    <h2>Frequently Asked Questions – FIHM</h2>
+
+    <div class="faq-item">
+      <div class="faq-question">1. What is the duration of the course?</div>
+      <div class="faq-answer">The Diploma in Hotel Management at FIHM is a 1-year full-time program, including theory, practical training, and internship.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">2. Is there a practical lab on campus?</div>
+      <div class="faq-answer">Yes, FIHM features a state-of-the-art on-campus lab for food production, service, and housekeeping training.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">3. Do you offer paid internships?</div>
+      <div class="faq-answer">Yes, our students undergo a paid internship with reputed hotels and restaurants as part of the program.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">4. Is hostel accommodation available?</div>
+      <div class="faq-answer">Yes, hostel facilities are available for both male and female students near the institute. First-come, first-served basis.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">5. What is the total course fee?</div>
+      <div class="faq-answer">The total course fee is ₹1,10,000, payable in a single installment at the time of admission.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">6. Can students pay the fee in installments?</div>
+      <div class="faq-answer">Yes.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">7. What are the minimum eligibility criteria?</div>
+      <div class="faq-answer">Applicants must have completed Class 12 or above. No prior hotel experience is required. School dropouts are also accepted.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">8. Is there a certificate at the end of the program?</div>
+      <div class="faq-answer">Yes, students receive a government-recognized diploma certificate suitable for national and international employment.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">9. What is the medium of instruction?</div>
+      <div class="faq-answer">Primarily English, with support in Malayalam and Hindi if needed.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">10. How can I apply?</div>
+      <div class="faq-answer">Apply online or directly at our office in Devagiri, Kozhikode. Seats are limited to 50 students per batch.</div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+
+{% block footer %}
+{% include 'foresight_app/footer.html' %}
+{% endblock %}

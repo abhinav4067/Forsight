@@ -121,23 +121,28 @@
         </div>
       </div>
 
-      <div class="course-card">
+      <!-- <div class="course-card">
         <img src="{% static 'images/house_keeping.jpg' %}" alt="Course 2">
         <div class="course-info">
-          <h3>Housekeeping(Specialization)</h3>
-          <!-- <p class="price">Free</p> -->
-          <a href="#" class="view-btn">Upcoming</a>
-        </div>
+          <h3>Housekeeping</h3>
+          <p class="price" style="color: #000;">This program trains students in the art of maintaining cleanliness, hygiene, and comfort in hospitality environments. It covers guest room preparation, laundry care, public area cleaning, inventory control, and guest service etiquette, providing both practical and internship experience to ensure readiness for real-world tasks.
+          </p>
+            
+            
+            <a href="#" class="view-btn" style="margin-top: 4%;" onclick="openCourseModal()">View Details</a>
+          </div>
       </div>
 
       <div class="course-card">
         <img src="{% static 'images/COMMI_3.png' %}" alt="Course 3">
         <div class="course-info">
-          <h3>Commi(Specialization)</h3>
-          <!-- <p class="price">Free</p> -->
-          <a href="#" class="view-btn">Upcoming</a>
-        </div>
-      </div>
+          <h3>Butcher</h3>
+          <p class="price" style="color: #000;">The Butcher Specialization provides students with the skills in meat preparation, cutting, and hygiene essential for professional kitchens. It combines practical training and hands-on experience to prepare graduates for careers in culinary environments.
+          </p>
+            
+            
+          <a href="#" class="view-btn" style="margin-top: 4%;" onclick="openCourseModal()">View Details</a>        </div>
+      </div> -->
     </div>
   </section>
   <div class="social-sidebar">
@@ -157,32 +162,7 @@
   {% block footer %}
   {% include 'foresight_app/footer.html' %}
   {% endblock %}
-  <div id="registrationModal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closeModalBtn">&times;</span>
-      <h2>Student Registration Form</h2>
-      <form class="registration-form" action="{% url 'register' %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="text" name="fullName" placeholder="Full Name" required />
-        <input type="email" name="email" placeholder="Email Address" required />
-        <input type="tel" name="phone" placeholder="Phone Number" required />
-        <input type="text" name="qualification" placeholder="Educational Qualification" required />
-        <select name="course" required>
-          <option value="Hotel Management">Hotel Management</option>
-        </select>
-                <textarea name="address" rows="4" placeholder="Permanent Address" required></textarea>
-      
-
-        
-        
-      
-        <button type="submit" class="submit-btn" style="background-color: #000; color: #fff; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;">
-          Submit Registration
-        </button>
-      </form>
-      
-    </div>
-  </div>
+  
  
 {% if messages %}
 <script>
@@ -200,57 +180,4 @@
 {% endif %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script>
-    const modal = document.getElementById("registrationModal");
-    const closeModalBtn = document.getElementById("closeModalBtn");
-  
-    // Get all buttons that should open the modal
-    const openModalBtns = document.querySelectorAll(".open-modal-btn");
-  
-    // Add event listener to each button
-    openModalBtns.forEach(btn => {
-      btn.onclick = (e) => {
-        e.preventDefault();
-        modal.style.display = "block";
-      };
-    });
-  
-    closeModalBtn.onclick = () => {
-      modal.style.display = "none";
-    };
-  
-    window.onclick = (event) => {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    };
-  </script>
-  
-  
-<style>.custom-file-upload {
-  position: relative;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.custom-file-upload input[type="file"] {
-  display: none;
-}
-
-.upload-label {
-  background-color: #000000;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-#fake-file-name {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-</style>
+ 

@@ -6,6 +6,7 @@
   <title>Foresight</title>
   <link rel="icon" type="image/jpg" href="{% static 'images/logo_home.jpg' %}" sizes="64x64">
 
+
   <style>
     :root {
       --bg-color: #ffffff;
@@ -275,12 +276,313 @@
        
           
           <td>
+            <button onclick="openViewModal({{ s.id }})">View</button>
+            <button onclick="download({{ s.id }})">Download</button>
             <button onclick="openEditModal({{ s.id }})">Edit</button>
             <button onclick="confirmDelete({{ s.id }})">Delete</button>
           </td>
         </tr>
-  
-        <!-- Edit Modal -->
+ <!-- Student View Modal -->
+ <div id="viewStudentModal" class="student-view-modal" style="display: none;" data-bs-backdrop="true" data-bs-keyboard="true" onclick="closeviewStudentModal(event)">
+  <div class="student-view-modal-dialog" onclick="event.stopPropagation()"> <!-- Prevent click event from bubbling up to the modal content -->
+    <div class="student-view-modal-content">
+      <div class="student-view-modal-header">
+        <h5 class="modal-title">🎓 Student Profile</h5>
+        <button type="button" class="close" onclick="closeviewStudentModal(event)">
+          &#10005; <!-- Unicode 'X' character -->
+        </button>
+      </div>
+      <div class="student-view-modal-body" id="student-details-body" style="min-height: 300px;">
+        Loading...
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openViewModal(studentId) {
+    fetch(`/students/details/${studentId}/`)
+      .then(response => response.json())
+      .then(data => {
+        const html = `
+  <div class="row">
+    <div class="col-md-4 text-center mb-3">
+      ${data.photo
+        ? `<img src="${data.photo}" class="rounded-3 border shadow-sm" style="width: 200px; height: 200px; object-fit: cover;">`
+        : '<div class="text-muted">No photo</div>'}
+    </div>
+    <div class="col-md-8">
+      <table>
+        <tbody>
+          ${renderRow("👤 Full Name", data.full_name)}
+          ${renderRow("📧 Email", data.email)}
+          ${renderRow("📞 Phone", data.phone)}
+          ${renderRow("💬 Whatsapp", data.whatsapp)}
+          ${renderRow("👨 Father's Name", data.father_name)}
+          ${renderRow("📞 Father's Phone", data.father_phone)}
+          ${renderRow("👩 Mother's Name", data.mother_name)}
+          ${renderRow("📞 Mother's Phone", data.mother_phone)}
+          ${renderRow("⚧️ Gender", data.gender)}
+          ${renderRow("🎂 Date of Birth", data.dob)}
+          ${renderRow("🎓 Qualification", data.qualification)}
+          ${renderRow("📚 Course", data.course)}
+          ${renderRow("🏠 Address", data.address)}
+          ${renderRow("🆔 Adhaar Number", data.adhaar_number)}
+          
+          <!-- Academic Info -->
+          <tr><th colspan="2" style="background-color: #f0f0f0;">📘 Academic Info</th></tr>
+          ${renderRow("🏫 College Name", data.college_name)}
+          ${renderRow("📅 College Year", data.college_year)}
+          ${renderRow("📊 College Score", data.college_score)}
+          ${renderRow("🏫 12th School", data.school_12)}
+          ${renderRow("📅 12th Year", data.year_12)}
+          ${renderRow("📊 12th Score", data.score_12)}
+          ${renderRow("🏫 10th School", data.school_10)}
+          ${renderRow("📅 10th Year", data.year_10)}
+          ${renderRow("📊 10th Score", data.score_10)}
+          ${renderRow("🏆 Achievements", data.achievements)}
+
+          <!-- Work Experience -->
+          <tr><th colspan="2" style="background-color: #f0f0f0;">💼 Work Experience</th></tr>
+          ${renderRow("🏢 Company", data.company_name)}
+          ${renderRow("🧑‍💼 Position", data.position)}
+          ${renderRow("🕒 From", data.work_from)}
+          ${renderRow("🕒 To", data.work_to)}
+
+          <!-- Meta Info -->
+          ${renderRow("🕓 Registered At", data.created_at)}
+        </tbody>
+      </table>
+    </div>
+  </div>
+`;
+
+        document.getElementById('student-details-body').innerHTML = html;
+        document.getElementById('viewStudentModal').style.display = 'flex';
+      })
+      .catch(err => {
+        document.getElementById('student-details-body').innerHTML = 'Error loading student details.';
+        console.error(err);
+      });
+
+    function renderRow(label, value) {
+      return `
+        <tr>
+          <th>${label}</th>
+          <td>${value || '—'}</td>
+        </tr>
+      `;
+    }
+  }
+
+  function closeviewStudentModal(event) {
+    // Check if the click is on the modal background (outside the modal content)
+    if (event.target.id === 'viewStudentModal' || event.target.closest('.close')) {
+      document.getElementById('viewStudentModal').style.display = 'none';
+    }
+  }
+</script>
+
+
+<style>
+ /* Modal styling */
+.student-view-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+  display: none; /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.student-view-modal-dialog {
+  background: white;
+  border-radius: 10px;
+  width: 60%; /* Modal width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-height: 90vh; /* Limit the maximum height of the modal */
+  overflow: hidden; /* Ensure the content inside the modal doesn't overflow outside */
+}
+
+.student-view-modal-header {
+  background-color: white;
+  text-align: left;
+  padding: 16px;
+  position: relative;
+  border-bottom: 1px solid #ddd;
+  height: 60px; /* Fixed header height */
+  overflow: hidden; /* Prevent header content from overflowing */
+}
+
+.student-view-modal-header h5 {
+  margin: 0;
+  color: #333;
+}
+
+.student-view-modal-header .close {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  color: #000;
+  cursor: pointer;
+}
+
+.student-view-modal-body {
+  padding: 20px;
+  color: #333;
+  overflow-y: auto; /* Allow vertical scrolling if content overflows */
+  max-height: calc(100vh - 140px); /* Adjust max height based on the header and footer */
+}
+
+.student-view-modal-body table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.student-view-modal-body table th,
+.student-view-modal-body table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.student-view-modal-body table th {
+  width: 40%;
+  text-align: left;
+  font-weight: bold;
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  async function download(studentId) {
+    const { jsPDF } = window.jspdf;
+    const response = await fetch(`/students/details/${studentId}/`);
+    const data = await response.json();
+    const doc = new jsPDF();
+
+    // Header
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('FORESIGHT INSTITUTE OF HOTEL MANAGEMENT', 105, 15, null, null, 'center');
+    doc.setFontSize(12);
+    doc.text('BATCH 2025–2026', 105, 22, null, null, 'center');
+    doc.setFontSize(10);
+    doc.text('KOZHIKODE', 105, 27, null, null, 'center');
+
+    doc.line(20, 30, 190, 30);
+
+    // Title
+    doc.setFontSize(13);
+    doc.setFont('helvetica', 'bold');
+    doc.text('STUDENT ADMISSION FORM', 105, 38, null, null, 'center');
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text('for diploma in hotel management', 105, 43, null, null, 'center');
+
+    // Photo
+    doc.rect(150, 35, 40, 40);
+    doc.setFontSize(8);
+    // doc.text('attach passport size photo', 152, 78);
+
+    let y = 55;
+    const labelX = 25;
+    const valueX = 90;
+
+    function addSection(title) {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.text(title, 20, y);
+      y += 6;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+    }
+
+    function addField(label, value) {
+      if (y > 280) {
+        doc.addPage();
+        y = 20;
+      }
+      doc.text(`${label}:`, labelX, y);
+      doc.text(`${value || '—'}`, valueX, y);
+      y += 5;
+    }
+
+    // Sections
+    addSection('1. Personal Information');
+    addField('Full Name', data.full_name);
+    addField('Date of Birth', data.dob);
+    addField('Gender', data.gender);
+    addField('Phone Number', data.phone);
+    addField('Whatsapp', data.whatsapp);
+    addField('Email Address', data.email);
+    addField('Adhaar Number', data.adhaar_number);
+    addField('Qualification', data.qualification);
+    addField('Course', data.course);
+    addField('Address', data.address);
+
+    addSection('2. Parent Information');
+    addField("Father's Name", data.father_name);
+    addField("Father's Phone", data.father_phone);
+    addField("Mother's Name", data.mother_name);
+    addField("Mother's Phone", data.mother_phone);
+
+    addSection('3. Academic Information');
+    addField('College Name', data.college_name);
+    addField('College Year', data.college_year);
+    addField('College Score', data.college_score);
+    addField('12th School', data.school_12);
+    addField('12th Year', data.year_12);
+    addField('12th Score', data.score_12);
+    addField('10th School', data.school_10);
+    addField('10th Year', data.year_10);
+    addField('10th Score', data.score_10);
+    addField('Achievements', data.achievements);
+
+    addSection('4. Work Experience');
+    addField('Company Name', data.company_name);
+    addField('Position', data.position);
+    addField('From', data.work_from);
+    addField('To', data.work_to);
+
+    addSection('5. Record Metadata');
+    addField('Submitted On', data.created_at);
+
+    // Declaration
+    // y += 10;
+    // doc.setFont('helvetica', 'bold');
+    // doc.setFontSize(10);
+    // doc.text('Declaration', 20, y);
+    // y += 5;
+    // doc.setFont('helvetica', 'normal');
+    // doc.setFontSize(9);
+    // doc.text('I hereby declare that all the above information is true and correct to the best of my knowledge.', 25, y);
+    // y += 15;
+    // doc.text('Signature of Parent/Guardian:', 25, y);
+    // doc.text('Date:', 150, y);
+
+    // Photo load & save
+    if (data.photo) {
+      const img = new Image();
+      img.src = data.photo;
+      img.onload = function () {
+        doc.addImage(img, 'JPEG', 150, 35, 40, 40);
+        doc.save(`Student_Admission_${studentId}.pdf`);
+      };
+    } else {
+      doc.save(`Student_Admission_${studentId}.pdf`);
+    }
+  }
+</script>
+
+
+<!-- Edit Modal -->
         <div id="editModal-{{ s.id }}" class="modal">
           <div class="modal-content">
             <span class="close" onclick="closeModal({{ s.id }})">&times;</span>
@@ -289,19 +591,99 @@
               {% csrf_token %}
               <label for="full_name">Full Name</label>
               <input id="full_name" name="full_name" value="{{ s.full_name }}">
+              
               <label for="email">Email</label>
               <input id="email" name="email" value="{{ s.email }}">
+              
               <label for="phone">Phone</label>
               <input id="phone" name="phone" value="{{ s.phone }}">
-              <label for="address">Address</label>
-              <input id="address" name="address" value="{{ s.address }}">
+              
+              <label for="whatsapp">Whatsapp</label>
+              <input id="whatsapp" name="whatsapp" value="{{ s.whatsapp }}">
+              
+              <label for="father_name">Father's Name</label>
+              <input id="father_name" name="father_name" value="{{ s.father_name }}">
+              
+              <label for="father_phone">Father's Phone</label>
+              <input id="father_phone" name="father_phone" value="{{ s.father_phone }}">
+              
+              <label for="mother_name">Mother's Name</label>
+              <input id="mother_name" name="mother_name" value="{{ s.mother_name }}">
+              
+              <label for="mother_phone">Mother's Phone</label>
+              <input id="mother_phone" name="mother_phone" value="{{ s.mother_phone }}">
+              
+              <label for="gender">Gender</label>
+              <input id="gender" name="gender" value="{{ s.gender }}">
+              
+              <label for="dob">Date of Birth</label>
+              <input id="dob" name="dob" type="date" value="{{ s.dob|date:'Y-m-d' }}">
+              
               <label for="qualification">Qualification</label>
               <input id="qualification" name="qualification" value="{{ s.qualification }}">
+              
               <label for="course">Preferred Course</label>
               <input id="course" name="course" value="{{ s.course }}">
-            
+              
+              <label for="address">Address</label>
+              <input id="address" name="address" value="{{ s.address }}">
+              
+              <label for="adhaar_number">Aadhaar Number</label>
+              <input id="adhaar_number" name="adhaar_number" value="{{ s.adhaar_number }}">
+              
+              <label for="photo">Profile Picture</label>
+              <input id="photo" name="photo" type="file">
+              {% if s.photo %}
+                  <img src="{{ s.photo.url }}" alt="Current Profile Picture" width="100">
+              {% endif %}
+              
+              <!-- Academic Information -->
+              <label for="college_name">College Name</label>
+              <input id="college_name" name="college_name" value="{{ s.college_name }}">
+              
+              <label for="college_year">College Year</label>
+              <input id="college_year" name="college_year" value="{{ s.college_year }}">
+              
+              <label for="college_score">College Score</label>
+              <input id="college_score" name="college_score" value="{{ s.college_score }}">
+              
+              <label for="school_12">12th School Name</label>
+              <input id="school_12" name="school_12" value="{{ s.school_12 }}">
+              
+              <label for="year_12">12th Year</label>
+              <input id="year_12" name="year_12" value="{{ s.year_12 }}">
+              
+              <label for="score_12">12th Score</label>
+              <input id="score_12" name="score_12" value="{{ s.score_12 }}">
+              
+              <label for="school_10">10th School Name</label>
+              <input id="school_10" name="school_10" value="{{ s.school_10 }}">
+              
+              <label for="year_10">10th Year</label>
+              <input id="year_10" name="year_10" value="{{ s.year_10 }}">
+              
+              <label for="score_10">10th Score</label>
+              <input id="score_10" name="score_10" value="{{ s.score_10 }}">
+              
+              <label for="achievements">Achievements</label>
+              <textarea id="achievements" name="achievements">{{ s.achievements }}</textarea>
+              
+              <!-- Work Experience -->
+              <label for="company_name">Company Name</label>
+              <input id="company_name" name="company_name" value="{{ s.company_name }}">
+              
+              <label for="position">Position</label>
+              <input id="position" name="position" value="{{ s.position }}">
+              
+              <label for="work_from">Work From</label>
+              <input type="date" id="work_from" name="work_from" value="{{ s.work_from|date:'Y-m-d' }}">
+              
+              <label for="work_to">Work To</label>
+              <input type="date" id="work_to" name="work_to" value="{{ s.work_to|date:'d-m-y' }}">
+              
               <button type="submit">Update</button>
-            </form>
+          </form>
+          
           </div>
         </div>
         {% endfor %}

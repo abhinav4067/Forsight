@@ -27,5 +27,8 @@ urlpatterns = [
     path('add_post/', views.post_create, name='post_create'),
     path('edit_post/<int:pk>/', views.post_edit, name='post_edit'),
     path('delete_post/<int:pk>/', views.post_delete, name='post_delete'),
+    path('admission/', views.admission, name='admission'),
+    path('students/details/<int:student_id>/', views.student_details_json, name='student_details_json'),
+
 
 ]
