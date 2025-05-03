@@ -39,8 +39,9 @@ class StudentRegistration(models.Model):
     # Work Experience
     company_name = models.CharField(max_length=255, blank=True, null=True)
     position = models.CharField(max_length=100, blank=True, null=True)
-    work_from = models.DateField(blank=True, null=True)
-    work_to = models.DateField(blank=True, null=True)
+    work_from = models.CharField(max_length=50, blank=True, null=True)
+    work_to = models.CharField(max_length=50, blank=True, null=True)
+
 
     created_at = models.DateTimeField(default=timezone.now)
 
