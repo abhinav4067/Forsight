@@ -256,10 +256,12 @@
         {% if students %}
       <table>
         <tr>
-          <th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Qualification</th><th>Course</th><th>Actions</th>
+          <th>Date</th>  <th>Name</th><th>Email</th><th>Phone</th><th>Qualification</th><th>Course</th><th>Actions</th>
         </tr>
         {% for s in students %}
         <tr>
+          <td>{{ s.created_at|date:"F j, Y" }}</td>
+
           <td>{{ s.full_name }}</td>
           <td>
             <a href="mailto:{{ enquiry.email }}" style="color: inherit; text-decoration: none;">
@@ -270,7 +272,6 @@
             <span style="color: inherit; text-decoration: none;">{{ s.phone }}</span>
           </td>
           
-                     <td>{{ s.address }}</td>
           <td>{{ s.qualification }}</td>
           <td>{{ s.course }}</td>
        
@@ -573,10 +574,10 @@
       img.src = data.photo;
       img.onload = function () {
         doc.addImage(img, 'JPEG', 150, 35, 40, 40);
-        doc.save(`Student_Admission_${studentId}.pdf`);
+        doc.save(`${ data.full_name}`);
       };
     } else {
-      doc.save(`Student_Admission_${studentId}.pdf`);
+      doc.save(`${ data.full_name}.pdf`);
     }
   }
 </script>
@@ -679,7 +680,7 @@
               <input type="date" id="work_from" name="work_from" value="{{ s.work_from|date:'Y-m-d' }}">
               
               <label for="work_to">Work To</label>
-              <input type="date" id="work_to" name="work_to" value="{{ s.work_to|date:'d-m-y' }}">
+              <input type="date" id="work_to" name="work_to" value="{{ s.work_to|date:'Y-m-d' }}">
               
               <button type="submit">Update</button>
           </form>
@@ -728,7 +729,7 @@
         <tbody>
           {% for enquiry in enquiries %}
           <tr>
-            <td>{{ enquiry.submitted_at }}</td>
+            <td>{{ enquiry.submitted_at|date:"F j, Y" }}</td>
             <td>{{ enquiry.first_name }}</td>
             <td>{{ enquiry.last_name }}</td>
             <td>
