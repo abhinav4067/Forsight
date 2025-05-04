@@ -1,4 +1,5 @@
 {% load static %}
+{% include "foresight_app/admission_modal.html" %}
 
 {% block header %}
 {% include 'foresight_app/header.html' %}
@@ -171,10 +172,9 @@
       </div>
     </div>
   </section>
-  <a href="https://wa.me/919048966026" class="chat-float" target="_blank" title="Chat with us on WhatsApp">
+  <a href="https://wa.me/9190489 66056" class="chat-float" target="_blank" title="Chat with us on WhatsApp">
     💬 Chat with us
   </a>
-  
 
   <section class="academics-section" style="background: url({% static "images/building2.jpg" %}) center center / cover no-repeat; padding: 80px 20px;">
     <div class="container">
@@ -207,10 +207,12 @@
   </section>
  
   <style>
- .chat-float {
+
+
+    .chat-float {
   position: fixed;
   bottom: 100px; /* ⬆️ Increased from 20px */
-  left: 20px;
+  right: 20px;
   background-color: #25D366;
   color: white;
   font-weight: bold;
@@ -227,8 +229,6 @@
   background-color: #1ebf5c;
   transform: scale(1.05);
 }
-
-
 
   </style>
   {% block footer %}
