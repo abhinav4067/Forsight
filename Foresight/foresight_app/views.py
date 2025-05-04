@@ -1,20 +1,26 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest, Http404
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.dateparse import parse_date
-from.models import*
-from .models import StudentRegistration, User_reg
-# For PDF generation
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
+from django.core.files.storage import default_storage
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password, check_password
+from django.template.loader import render_to_string
 
+from .models import *
+
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4, letter
+from reportlab.lib.styles import getSampleStyleSheet
+
+from textwrap import wrap
+from io import StringIO
 import os
 import csv
 import random
-from datetime import datetime
-from django.db.models import Q
+import datetime
 
 
 def home(request):
@@ -24,18 +30,15 @@ def home(request):
 def credit(request):
     return render(request, 'foresight_app/credits.html')
 def resources(request):
+    privacy_policy = PrivacyPolicy.objects.first()
     posts=Post.objects.all()
 
     return render(request, 'foresight_app/resources.html',{
-        'posts':posts
+        'posts':posts,
+        'privacy_policy': privacy_policy
 
     })
-from django.shortcuts import render, redirect
-from .models import Contact
 
-from django.contrib import messages
-from django.shortcuts import redirect, render
-from .models import Contact
 
 def contact(request):
     if request.method == 'POST':
@@ -55,13 +58,12 @@ def contact(request):
             )
             messages.success(request, 'Thank you! Your message has been sent successfully.')
             return redirect('contact')  # Ensure 'contact' URL is correctly named
+    privacy_policy = PrivacyPolicy.objects.first()
 
-    return render(request, 'foresight_app/contact.html')
+    return render(request, 'foresight_app/contact.html',{'privacy_policy': privacy_policy})
 
 
 
-from django.http import JsonResponse
-from .models import Contact
 
 def toggle_replied(request):
     if request.method == 'POST':
@@ -78,14 +80,16 @@ def toggle_replied(request):
 
 
 def our_team(request):
-    return render(request, 'foresight_app/our_team.html')
+    privacy_policy = PrivacyPolicy.objects.first()
+
+    return render(request, 'foresight_app/our_team.html',{'privacy_policy': privacy_policy})
 def learning_modules(request):
-    return render(request, 'foresight_app/learning_modules.html')
+    privacy_policy = PrivacyPolicy.objects.first()
+
+    return render(request, 'foresight_app/learning_modules.html',{'privacy_policy': privacy_policy})
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import StudentRegistration
+
 def student_registration_view(request):
     if request.method == 'POST':
         try:
@@ -167,18 +171,6 @@ def student_registration_view(request):
     return redirect('home')
 
 
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from django.contrib import messages
-from .models import StudentRegistration, Post, Contact
-import csv
-from io import StringIO
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from django.contrib.auth.decorators import login_required
-
 
 def dashboard(request):
     # Check if user is logged in
@@ -249,8 +241,7 @@ def delete_privacy_policy(request, pk):
     return redirect('dashboard')
 
 
-from django.http import JsonResponse, Http404
-from django.http import JsonResponse, Http404
+
 
 def student_details_json(request, student_id):
     try:
@@ -298,7 +289,7 @@ def student_details_json(request, student_id):
         raise Http404("Student not found")
 
 
-import datetime
+
 
 def export_enquiries_csv(request):
     query = request.GET.get('q', '')
@@ -340,24 +331,6 @@ def export_enquiries_csv(request):
 
     return response
 
-from textwrap import wrap
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-from django.http import HttpResponse
-from textwrap import wrap
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-from django.http import HttpResponse
-from textwrap import wrap
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-from django.http import HttpResponse
-
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-from django.http import HttpResponse
-from reportlab.lib.styles import getSampleStyleSheet
-from textwrap import wrap
 
 def export_enquiries_pdf(request):
     query = request.GET.get('q', '')
@@ -471,8 +444,6 @@ def export_enquiries_pdf(request):
 
 
 
-from django.core.files.storage import default_storage
-import os
 
 def delete_student(request, pk):
     student = get_object_or_404(StudentRegistration, pk=pk)
@@ -490,8 +461,6 @@ def delete_student(request, pk):
     return redirect('dashboard')
 
 
-from django.core.files.storage import default_storage
-import os
 
 def edit_student(request, pk):
     student = get_object_or_404(StudentRegistration, pk=pk)
@@ -622,13 +591,6 @@ def export_students_pdf(request):
 
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import User_reg
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import User_reg
-from django.contrib.auth.hashers import make_password, check_password
 def register_user(request):
     if request.method == 'POST' and 'register' in request.POST:
         username = request.POST.get('username')
@@ -684,18 +646,6 @@ def logout_user(request):
 
 
 
-import random
-from django.conf import settings
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import User_reg
-
-import random
-from django.core.mail import send_mail
-from django.contrib.auth.hashers import make_password
-from django.conf import settings
-from .models import User_reg
 def admin_forget(request):
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -749,11 +699,7 @@ def admin_forget(request):
 
 
 
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
-from django.http import HttpResponse, HttpResponseBadRequest
 
-# List all posts
 
 
 # Create a new post
@@ -771,8 +717,7 @@ def post_create(request):
 
     return render(request, 'foresight_app/dashboard.html')
 
-import os
-from django.conf import settings
+
 
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -809,9 +754,7 @@ def post_delete(request, pk):
 
 
 
-from django.shortcuts import render, redirect
-from .models import Contact
-from django.http import JsonResponse
+
 
 def enquiry_dashboard(request):
     query = request.GET.get('q', '')
@@ -851,4 +794,6 @@ def toggle_replied(request):
 
 
 def admission(request):
-    return render(request, 'foresight_app/admission.html')
+    privacy_policy = PrivacyPolicy.objects.first()
+
+    return render(request, 'foresight_app/admission.html',{'privacy_policy': privacy_policy})
