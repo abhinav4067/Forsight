@@ -88,16 +88,18 @@
 
       <div class="enroll-grid">
         <div class="enroll-item" style="border-right: solid 1px black; border-bottom: solid 1px black;">
-            <a href="https://www.flaticon.com/free-icons/academic" title="academic icons">
-                <img src="https://cdn-icons-png.flaticon.com/512/1155/1155084.png" alt="Academic Icon" style="width: 50px; height: 50px;">
-            </a>
-            <h3 style="color: black;" class="slide-in-left">BSS APPROVED and curriculum based on American Culinary Federation standard</h3>
-            <p class="slide-in-left">FIHM’s Diploma in Hotel Management is approved by Bharat Sevak Samaj (BSS), a national development agency promoted by the Government of India. Our curriculum is thoughtfully designed in alignment with standards set by the American Culinary Federation (ACF), ensuring students receive a globally relevant education, blending national certification with world-class culinary and hospitality training to equip them for a successful career.</p>
-        </div>
+              <img src="{% static 'images/tic_icon.jpg' %}" alt="Quality Icon" style="width: 50px; height: 50px;">
+          <h3 style="color: black;" class="slide-in-left">BSS APPROVED and curriculum based on American Culinary Federation standard</h3>
+          <p class="slide-in-left">
+              FIHM’s Diploma in Hotel Management is approved by Bharat Sevak Samaj (BSS), a national development agency promoted by the Government of India. 
+              Our curriculum is thoughtfully designed in alignment with standards set by the American Culinary Federation (ACF), ensuring students receive a 
+              globally relevant education, blending national certification with world-class culinary and hospitality training to equip them for a successful career.
+          </p>
+      </div>
+      
         <div class="enroll-item" style="border-bottom: solid 1px black;">
-            <a href="https://www.flaticon.com/free-icons/cooking" title="cooking icons">
-                <img src="https://cdn-icons-png.flaticon.com/512/2965/2965553.png" alt="Cooking Icon" style="width: 50px; height: 50px;">
-            </a>
+                <img src="{% static 'images/field2.jpg' %}" alt="Cooking Icon" style="width: 50px; height: 50px;">
+            
             <h3 class="slide-in-left" style="margin-left: 8%;">Hands-on training and internships with remuneration</h3>
             <p class="slide-in-left" style="margin-left: 8%;">Our students benefit from real-world internship opportunities at leading hotels, resorts, and restaurants, gaining crucial practical experience in hospitality. These internships are designed to ensure students build skills through hands-on training, while also receiving remuneration to support their learning journey. This program bridges classroom education with real industry practice.</p>
         </div>
@@ -108,11 +110,10 @@
       </div>
       
         <div class="enroll-item">
-            <a href="https://www.flaticon.com/free-icons/job" title="job icons">
-                <img src="https://cdn-icons-png.flaticon.com/512/185/185971.png" alt="Job Icon" style="width: 50px; height: 50px;">
-            </a>
+                <img src="{% static 'images/field4.jpg' %}" alt="Job Icon" style="width: 50px; height: 50px;">
+          
             <h3 class="slide-in-left" style="margin-left: 8%;">Placement support in India, abroad, and on cruise ships</h3>
-            <p class="slide-in-left" style="margin-left: 8%;">At FIHM, we are committed to providing our students with exceptional placement opportunities both within India and internationally. Our Placement Cell collaborates with top hotels, resorts, and restaurants, as well as offering specialized placement support for cruise ship careers. With a strong global network, we ensure that each student is prepared and positioned for success in the hospitality industry.</p>
+            <p class="slide-in-left" style="margin-left: 8%;">At FIHM, we are committed to providing our students with exceptional placement opportunities both within India and internationally. Our Placement Cell collaborates with top hotels, resorts, and restaurants, and we are proudly partnered with Royal Cruise Careers, a leader in cruise ship recruitment, to offer specialized placement support for cruise ship careers. With a strong global network, we ensure that each student is prepared and positioned for success in the hospitality industry.</p>
         </div>
     </div>
         
@@ -159,18 +160,23 @@
     <div class="overlay">
       <div class="content-wrapper">
         <div class="left">
-          <h1>About Foresight<br>Foresight</h1>
-          <p class="subtitle">We aim to empower students to<br>change the world</p>
+          <h1>About Foresight</h1>
+          <p class="subtitle">Start with Hospitality, Graduate with Opportunity</p>
         </div>
         <div class="right">
-          <p>Foresight Institute of Hotel Management is dedicated to nurturing future leaders in hospitality. With a focus on hands-on training, industry exposure, and academic excellence, we prepare students for rewarding careers in hotels, resorts, and cruise lines.</p>
-          <p>Our experienced faculty and modern facilities provide the perfect environment for learning. At Foresight, we don’t just teach hospitality—we live it.</p>
+        
+          <p>At Foresight Institute of Hotel Management, we are backed by the expertise of a management team with over 11 years of experience in hospitality training and international placements. Our team also leads the Royal Institute of Cruise Ship Career Program and Pre-Recruitment Training Center, through which we have successfully guided over 500 candidates into prestigious cruise lines across the globe. Foresight builds on this strong foundation to offer quality education and real career pathways in hotel management.</p>
           <a href="{% url 'resources' %}" class="read-more-btn">Read More</a>
         </div>
         
       </div>
     </div>
   </section>
+  <a href="https://wa.me/919048966026" class="chat-float" target="_blank" title="Chat with us on WhatsApp">
+    💬 Chat with us
+  </a>
+  
+
   <section class="academics-section" style="background: url({% static "images/building2.jpg" %}) center center / cover no-repeat; padding: 80px 20px;">
     <div class="container">
       <div class="academics-header">
@@ -200,7 +206,32 @@
    
       
   </section>
+ 
+  <style>
+ .chat-float {
+  position: fixed;
+  bottom: 100px; /* ⬆️ Increased from 20px */
+  left: 20px;
+  background-color: #25D366;
+  color: white;
+  font-weight: bold;
+  padding: 12px 18px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+}
 
+.chat-float:hover {
+  background-color: #1ebf5c;
+  transform: scale(1.05);
+}
+
+
+
+  </style>
   {% block footer %}
   {% include 'foresight_app/footer.html' %}
   {% endblock %}

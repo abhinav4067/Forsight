@@ -9,41 +9,72 @@
     <p>Learn about our courses</p>
   </div>
   <!-- Unique Modal -->
-<div id="courseDetailsModal" class="custom-course-modal">
+<!-- Modal for Course 1 -->
+<div id="course1Modal" class="custom-course-modal">
   <div class="custom-modal-content">
-    <span class="custom-close" onclick="closeCourseModal()">&times;</span>
+    <span class="custom-close" onclick="closeCourseModal('course1Modal')">&times;</span>
+    <!-- Same content as your first course modal -->
+    <!-- ... -->
+  </div>
+</div>
+
+<!-- Modal for Course 2: Culinary Arts -->
+<div id="course2Modal" class="custom-course-modal">
+  <div class="custom-modal-content">
+    <span class="custom-close" onclick="closeCourseModal('course2Modal')">&times;</span>
     <h3>Course Duration:</h3>
     <p><strong>Total Duration:</strong> 1 Year</p>
     <p><strong>Format:</strong> 2 Semesters (6 months each)</p>
     <p><strong>Includes:</strong> Theory classes, practical training, industry visits, and internship</p>
 
     <h3>Core Subjects Covered:</h3>
-
-    <p><strong>1. Front Office Operations</strong><br>
-    Guest handling, check-in/check-out procedures, reservations<br>
-    Use of property management systems (PMS)</p>
-
-    <p><strong>2. Food & Beverage Service</strong><br>
-    Restaurant service techniques<br>
-    Table setup, menu planning, and guest service etiquette</p>
-
-    <p><strong>3. Food Production (Kitchen Operations)</strong><br>
-    Basics of culinary arts<br>
-    Indian and international cuisines<br>
-    Kitchen safety, hygiene, and equipment handling</p>
-
-    <p><strong>4. Housekeeping Operations</strong><br>
-    Room maintenance, laundry management<br>
-    Cleaning methods and materials, inventory control</p>
-
-    <p><strong>5. Communication & Soft Skills</strong><br>
-    English for hospitality<br>
-    Customer service and team dynamics</p>
-
-    <p><strong>6. Hospitality Sales & Marketing Basics (Optional/Elective)</strong><br>
-    Introduction to sales strategies in the hotel industry</p>
+    <p><strong>1. Food Production (Kitchen Operations)</strong><br>Basics of culinary arts, Indian and international cuisines, kitchen safety & hygiene</p>
+    <p><strong>2. Food & Beverage Service</strong><br>Restaurant service techniques, table setup, guest service</p>
+    <p><strong>3. Hospitality Hygiene & Safety</strong><br>Food safety, sanitation, waste management</p>
+    <p><strong>4. Menu Planning & Design</strong><br>Menu creation, costing, innovation</p>
+    <p><strong>5. Food & Beverage Management</strong><br>Beverage knowledge, inventory, budgeting</p>
+    <p><strong>6. Communication & Soft Skills</strong><br>English, customer service, conflict resolution</p>
   </div>
 </div>
+
+<!-- Modal for Course 3: Housekeeping -->
+<div id="course3Modal" class="custom-course-modal">
+  <div class="custom-modal-content">
+    <span class="custom-close" onclick="closeCourseModal('course3Modal')">&times;</span>
+    <h3>Course Duration:</h3>
+    <p><strong>Total Duration:</strong> 1 Year</p>
+    <p><strong>Format:</strong> 2 Semesters (6 months each)</p>
+    <p><strong>Includes:</strong> Theory classes, practical training, industry visits, and internship</p>
+
+    <h3>Core Subjects Covered:</h3>
+    <p><strong>1. Housekeeping Operations</strong><br>Cleaning, room maintenance, laundry</p>
+    <p><strong>2. Floor & Public Area Management</strong><br>Floor care, public areas, sustainability</p>
+    <p><strong>3. Housekeeping Inventory Control</strong><br>Stock & cost control, tools</p>
+    <p><strong>4. Health, Safety & Hygiene</strong><br>Hazardous materials, infection control</p>
+    <p><strong>5. Guestroom Preparation</strong><br>Room prep, requests, aesthetics</p>
+    <p><strong>6. Communication & Soft Skills</strong><br>English, guest service, team skills</p>
+  </div>
+</div>
+
+<!-- Modal for Course 4: Food & Beverage Service -->
+<div id="course4Modal" class="custom-course-modal">
+  <div class="custom-modal-content">
+    <span class="custom-close" onclick="closeCourseModal('course4Modal')">&times;</span>
+    <h3>Course Duration:</h3>
+    <p><strong>Total Duration:</strong> 1 Year</p>
+    <p><strong>Format:</strong> 2 Semesters (6 months each)</p>
+    <p><strong>Includes:</strong> Theory classes, practical training, industry visits, and internship</p>
+
+    <h3>Core Subjects Covered:</h3>
+    <p><strong>1. Food & Beverage Service Techniques</strong><br>Service settings, etiquette, interaction</p>
+    <p><strong>2. Restaurant and Bar Operations</strong><br>Front-of-house, bar ops, cocktails</p>
+    <p><strong>3. Menu Planning and Design</strong><br>Pairing, dietary menus</p>
+    <p><strong>4. Customer Service & Guest Relations</strong><br>Communication, complaints, experience</p>
+    <p><strong>5. Food Safety & Hygiene</strong><br>Safe handling, health standards</p>
+    <p><strong>6. Communication & Soft Skills</strong><br>English, team dynamics, interpersonal skills</p>
+  </div>
+</div>
+
 <style>
   .custom-course-modal {
     display: none;
@@ -90,36 +121,71 @@
   }
   </style>
 <script>
-  function openCourseModal() {
-    document.getElementById("courseDetailsModal").style.display = "block";
+  function openCourseModal(id) {
+    document.getElementById(id).style.display = "block";
   }
-  
-  function closeCourseModal() {
-    document.getElementById("courseDetailsModal").style.display = "none";
+
+  function closeCourseModal(id) {
+    document.getElementById(id).style.display = "none";
   }
-  
-  // Optional: Close when clicking outside the modal
+
+  // Optional: Close when clicking outside any modal
   window.addEventListener("click", function(event) {
-    const modal = document.getElementById("courseDetailsModal");
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
+    const modals = document.querySelectorAll(".custom-course-modal");
+    modals.forEach(modal => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
   });
-  </script>
+</script>
+
     
   <section class="learning-section ">
    
 
     <div class="learning-grid">
-      <div class="course-card">
-        <img style="height: 300px;" src="{% static 'images/reception.png' %}" alt="Course 1">
-        <div class="course-info">
-          <h3>Hotel Management</h3>
-          <p class="price" style="color: #000;">This 1-year diploma program equips students with essential knowledge and hands-on skills for a successful career in the hospitality industry. It covers key hotel operations and combines classroom learning with practical training to prepare graduates for immediate employment or advanced studies.
-          </p>
-          <a href="#" class="view-btn" style="margin-top: 4%;" onclick="openCourseModal()">View Details</a>
-        </div>
-      </div>
+      <!-- Course Card 1: Hotel Management -->
+<div class="course-card">
+  <img style="height: 300px;" src="{% static 'images/reception.png' %}" alt="Course 1">
+  <div class="course-info">
+    <h3>Hotel Management</h3>
+    <p class="price" style="color: #000;">This 1-year diploma program equips students with essential knowledge and hands-on skills for a successful career in the hospitality industry...</p>
+    <a href="#" class="view-btn" style="margin-top: 4%;" onclick="openCourseModal('course1Modal')">View Details</a>
+  </div>
+</div>
+
+<!-- Course Card 2: Culinary Arts -->
+<div class="course-card">
+  <img style="height: 300px;" src="{% static 'images/Food_culinary_arts.jpg' %}" alt="Course 2">
+  <div class="course-info">
+    <h3>Diploma in Food Production & Culinary Arts</h3>
+    <p class="price" style="color: #000;">A comprehensive 1-year program covering culinary arts, hygiene, menu planning, and food service techniques, designed for aspiring chefs and kitchen professionals.</p>
+    <a href="#" class="view-btn" style="margin-top: 4%;" onclick="openCourseModal('course2Modal')">View Details</a>
+  </div>
+</div>
+
+<!-- Course Card 3: Housekeeping -->
+<div class="course-card">
+  <img style="height: 300px;" src="{% static 'images/house_keeping.jpg' %}" alt="Course 3">
+  <div class="course-info">
+    <h3>Diploma in Housekeeping Operations</h3>
+    <p class="price" style="color: #000;">This 1-year diploma trains students in professional housekeeping, cleanliness standards, inventory, and guest room management for the hospitality industry.</p>
+    <a href="#" class="view-btn" style="margin-top: 4%;" onclick="openCourseModal('course3Modal')">View Details</a>
+  </div>
+</div>
+
+<!-- Course Card 4: Food and Beverage Service -->
+<div class="course-card">
+  <img style="height: 300px;" src="{% static 'images/food_and_beverages.jpg' %}" alt="Course 4">
+  <div class="course-info">
+    <h3>Diploma in Food and Beverage Service</h3>
+    <p class="price" style="color: #000;">An intensive 1-year diploma focused on food & beverage service techniques, restaurant operations, and customer service in the hospitality sector.</p>
+    <a href="#" class="view-btn" style="margin-top: 4%;" onclick="openCourseModal('course4Modal')">View Details</a>
+  </div>
+</div>
+
+      
 
       <!-- <div class="course-card">
         <img src="{% static 'images/house_keeping.jpg' %}" alt="Course 2">

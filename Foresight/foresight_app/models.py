@@ -89,3 +89,10 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class PrivacyPolicy(models.Model):
+    policy = models.TextField()
+
+    def __str__(self):
+        return f"Privacy Policy ({self.id})"
+

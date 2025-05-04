@@ -11,6 +11,7 @@ urlpatterns = [
     path('register/', views.student_registration_view, name='register'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('log_out/', views.logout_user, name='log_out'),
+    path('credit/', views.credit, name='credit'),
     path('edit/<int:pk>/', views.edit_student, name='edit_student'),
     path('delete/<int:pk>/', views.delete_student, name='delete_student'),
 
@@ -29,6 +30,10 @@ urlpatterns = [
     path('delete_post/<int:pk>/', views.post_delete, name='post_delete'),
     path('admission/', views.admission, name='admission'),
     path('students/details/<int:student_id>/', views.student_details_json, name='student_details_json'),
+    path('add_privacy_policy/', views.add_privacy_policy, name='add_privacy_policy'),
+    path('edit_privacy_policy/<int:pk>/', views.edit_privacy_policy, name='edit_privacy_policy'),
+    path('delete_privacy_policy/<int:pk>/', views.delete_privacy_policy, name='delete_privacy_policy'),
+    
 
 
 ]

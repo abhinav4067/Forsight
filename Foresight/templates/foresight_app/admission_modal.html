@@ -92,30 +92,30 @@
           
           <div class="admission-form-group">
             <div class="admission-field">
-              <label>12th Grade School Name</label>
+              <label>12th Grade School Name <span class="admission-required">*</span></label>
               <input type="text" name="school_12" placeholder="12th Grade School Name" required>
             </div>
             <div class="admission-field">
-              <label>Year</label>
+              <label>Year<span class="admission-required">*</span></label>
               <input type="text" name="year_12" placeholder="Year" required>
             </div>
             <div class="admission-field">
-              <label>Grade/Score</label>
+              <label>Grade/Score<span class="admission-required">*</span></label>
               <input type="text" name="score_12" placeholder="Grade/Score" required>
             </div>
           </div>
           
           <div class="admission-form-group">
             <div class="admission-field">
-              <label>10th Grade School Name</label>
+              <label>10th Grade School Name<span class="admission-required">*</span></label>
               <input type="text" name="school_10" placeholder="10th Grade School Name" required>
             </div>
             <div class="admission-field">
-              <label>Year</label>
+              <label>Year<span class="admission-required">*</span></label>
               <input type="text" name="year_10" placeholder="Year" required>
             </div>
             <div class="admission-field">
-              <label>Grade/Score</label>
+              <label>Grade/Score<span class="admission-required">*</span></label>
               <input type="text" name="score_10" placeholder="Grade/Score" required>
             </div>
           </div>
@@ -198,11 +198,23 @@
   
         <div class="admission-disclaimer">
           I hereby declare that the information provided above is correct to the best of my knowledge.
-          I consent to the collection and use of my data as per the privacy policy of FIHM.
+          I consent to the collection and use of my data as per the <a href="#" onclick="openPrivacyPolicyModal(event)">Privacy Policy</a>
+
+          
           I agree to abide by the rules and regulations of the Foresight Institute of Hotel Management during my course
           <span class="admission-required">*</span>
         </div>
-  
+   
+            <!-- Privacy Policy Modal -->
+<div id="privacy-policy-modal" class="privacy-policy-modal" style="display:none;" onclick="outsideClick(event)">
+    <div class="privacy-modal-content" onclick="event.stopPropagation();">
+      <span class="privacy-close" onclick="closePrivacyPolicyModal()">&times;</span>
+      <h2>Privacy Policy</h2>
+      <div id="policy-content">
+        {{ privacy_policy.policy|linebreaks }}
+      </div>
+    </div>
+  </div>
         <div class="admission-checkbox">
           <label><input type="checkbox" required> Terms and Conditions agreed</label>
         </div>
@@ -219,6 +231,72 @@
       </form>
     </div>
   </div>
+
+  
+  <style>
+  /* Modal Overlay */
+  .privacy-policy-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1002;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Modal Box */
+  .privacy-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    max-height: 80vh; /* Important for scroll */
+    overflow-y: auto;  /* Enables vertical scroll */
+  }
+  
+  /* Close Icon */
+  .privacy-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+    z-index: 1;
+  }
+  
+  /* Ensures the admission modal is beneath */
+  #admission-formModal {
+    z-index: 1001;
+  }
+  </style>
+  
+  <script>
+  // Open modal
+  function openPrivacyPolicyModal(event) {
+    event.preventDefault();
+    document.getElementById("privacy-policy-modal").style.display = "flex";
+  }
+  
+  // Close modal
+  function closePrivacyPolicyModal() {
+    document.getElementById("privacy-policy-modal").style.display = "none";
+  }
+  
+  // Close if clicking outside content
+  function outsideClick(event) {
+    if (event.target.id === "privacy-policy-modal") {
+      closePrivacyPolicyModal();
+    }
+  }
+  </script>
   
   <style>
     #admission-formModal {

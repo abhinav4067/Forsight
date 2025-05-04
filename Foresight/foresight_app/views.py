@@ -18,7 +18,11 @@ from django.db.models import Q
 
 
 def home(request):
-    return render(request, 'foresight_app/index.html')
+    privacy_policy = PrivacyPolicy.objects.first()  # or filter by some condition if needed
+
+    return render(request, 'foresight_app/index.html', {'privacy_policy': privacy_policy})
+def credit(request):
+    return render(request, 'foresight_app/credits.html')
 def resources(request):
     posts=Post.objects.all()
 
@@ -210,6 +214,7 @@ def dashboard(request):
         enquiries = enquiries.filter(submitted_at__date__gte=enquiry_date_from)
 
     posts=Post.objects.all()
+    policies = PrivacyPolicy.objects.all()
     return render(request, 'foresight_app/dashboard.html', {
         'students': students,
         'query': student_query,
@@ -219,8 +224,29 @@ def dashboard(request):
         'enquiry_query': enquiry_query,
         'enquiry_date_from': enquiry_date_from,
         'enquiry_date_to': enquiry_date_to,
-        'posts':posts
+        'posts':posts,
+        'policies': policies
     })
+def add_privacy_policy(request):
+    if request.method == 'POST':
+        policy_text = request.POST.get('policy')
+        if policy_text:
+            PrivacyPolicy.objects.create(policy=policy_text)
+    return redirect('dashboard')
+
+def edit_privacy_policy(request, pk):
+    policy = get_object_or_404(PrivacyPolicy, pk=pk)
+    if request.method == 'POST':
+        updated_text = request.POST.get('policy')
+        if updated_text:
+            policy.policy = updated_text
+            policy.save()
+    return redirect('dashboard')
+
+def delete_privacy_policy(request, pk):
+    policy = get_object_or_404(PrivacyPolicy, pk=pk)
+    policy.delete()
+    return redirect('dashboard')
 
 
 from django.http import JsonResponse, Http404
