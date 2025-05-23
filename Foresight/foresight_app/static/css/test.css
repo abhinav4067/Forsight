@@ -29,8 +29,8 @@
     left: 0;
     width: 100%;
     z-index: 999;
-    background: black;
-    color: white;
+    background: rgb(253, 249, 249);
+    color: rgb(0, 0, 0);
   }
   
   .nav-links {
@@ -40,7 +40,7 @@
   }
   
   .nav-links a {
-    color: #fff;
+    color: #010101;
     text-decoration: none;
   }
   
@@ -117,12 +117,13 @@
       position: absolute;
       top: 100%;
       right: 0;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(255, 255, 255, 0.9);
       padding: 1rem;
       display: none;
       flex-direction: column;
       width: max-content;
       border-radius: 0 0 10px 10px;
+      color: rgb(3, 3, 3)
     }
   
     .nav-links.active {

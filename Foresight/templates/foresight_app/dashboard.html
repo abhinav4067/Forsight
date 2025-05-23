@@ -329,7 +329,6 @@
           ${renderRow("🎓 Qualification", data.qualification)}
           ${renderRow("📚 Course", data.course)}
           ${renderRow("🏠 Address", data.address)}
-          ${renderRow("🆔 Adhaar Number", data.adhaar_number)}
           
           <!-- Academic Info -->
           <tr><th colspan="2" style="background-color: #f0f0f0;">📘 Academic Info</th></tr>
@@ -344,12 +343,7 @@
           ${renderRow("📊 10th Score", data.score_10)}
           ${renderRow("🏆 Achievements", data.achievements)}
 
-          <!-- Work Experience -->
-          <tr><th colspan="2" style="background-color: #f0f0f0;">💼 Work Experience</th></tr>
-          ${renderRow("🏢 Company", data.company_name)}
-          ${renderRow("🧑‍💼 Position", data.position)}
-          ${renderRow("🕒 From", data.work_from)}
-          ${renderRow("🕒 To", data.work_to)}
+        
 
           <!-- Meta Info -->
           ${renderRow("🕓 Registered At", data.created_at)}
@@ -524,7 +518,7 @@
     addField('Phone Number', data.phone);
     addField('Whatsapp', data.whatsapp);
     addField('Email Address', data.email);
-    addField('Adhaar Number', data.adhaar_number);
+    // addField('Adhaar Number', data.adhaar_number);
     addField('Qualification', data.qualification);
     addField('Course', data.course);
     addField('Address', data.address);
@@ -547,13 +541,7 @@
     addField('10th Score', data.score_10);
     addField('Achievements', data.achievements);
 
-    addSection('4. Work Experience');
-    addField('Company Name', data.company_name);
-    addField('Position', data.position);
-    addField('From', data.work_from);
-    addField('To', data.work_to);
-
-    addSection('5. Record Metadata');
+    addSection('5. Record ');
     addField('Submitted On', data.created_at);
 
     // Declaration
@@ -630,8 +618,8 @@
               <label for="address">Address</label>
               <input id="address" name="address" value="{{ s.address }}">
               
-              <label for="adhaar_number">Aadhaar Number</label>
-              <input id="adhaar_number" name="adhaar_number" value="{{ s.adhaar_number }}">
+              <!-- <label for="adhaar_number">Aadhaar Number</label>
+              <input id="adhaar_number" name="adhaar_number" value="{{ s.adhaar_number }}"> -->
               
               <label for="photo">Profile Picture</label>
               <input id="photo" name="photo" type="file">
@@ -671,7 +659,7 @@
               <textarea id="achievements" name="achievements">{{ s.achievements }}</textarea>
               
               <!-- Work Experience -->
-              <label for="company_name">Company Name</label>
+              <!-- <label for="company_name">Company Name</label>
               <input id="company_name" name="company_name" value="{{ s.company_name }}">
               
               <label for="position">Position</label>
@@ -681,7 +669,7 @@
               <input type="date" id="work_from" name="work_from" value="{{ s.work_from|date:'Y-m-d' }}">
               
               <label for="work_to">Work To</label>
-              <input type="date" id="work_to" name="work_to" value="{{ s.work_to|date:'Y-m-d' }}">
+              <input type="date" id="work_to" name="work_to" value="{{ s.work_to|date:'Y-m-d' }}"> -->
               
               <button type="submit">Update</button>
           </form>

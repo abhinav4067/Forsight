@@ -6,10 +6,10 @@
 {% endblock %}
 
   
-  <section class="hero" style="background-image: url('{% static "images/building3.jpg" %}');">
+  <section class="hero" style="background-image: url('{% static "images/new_bg.jpg" %}');">
     <div class="hero-content">
       <h1 class="fade-in-up">Foresight Institute of Hotel Management</h1>
-      <p class="fade-in-up delay-1">Start with Hospitality, Graduate with Opportunity</p>
+      <p class="fade-in-up delay-1">Specialized in Cruise Career Training and Placement</p>
       <a href="#enroll" onclick="openForm()" class="btn fade-in-up delay-2">Enroll Now</a>
     </div>
     
@@ -80,6 +80,82 @@
       animation: slideInLeft 1s ease-out forwards;
     }
   </style>
+  <style>
+    .rci-offer-section {
+      background: #fdf5ed;
+      padding: 60px 20px;
+      text-align: center;
+    }
+  
+    .rci-offer-title {
+      font-size: 2em;
+      color: #4b2e2e;
+      margin-bottom: 30px;
+    }
+  
+    .rci-offer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  
+    @media (min-width: 576px) {
+      .rci-offer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  
+    @media (min-width: 992px) {
+      .rci-offer-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  
+    .rci-offer-item {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+  
+    .rci-offer-item span {
+      font-size: 2em;
+      display: block;
+      margin-bottom: 10px;
+    }
+  
+    .rci-offer-item p {
+      font-weight: 500;
+      color: #444;
+    }
+  
+    .rci-offer-item.highlight {
+      border: 2px solid #4b2e2e;
+      background-color: #fff8f2;
+      font-weight: bold;
+    }
+  
+    .rci-offer-item:hover {
+      transform: scale(1.05);
+    }
+  </style>
+  
+  <section class="rci-offer-section">
+    <h2 class="rci-offer-title">What We Offer</h2>
+    <div class="rci-offer-grid">
+      <div class="rci-offer-item highlight">
+        <span>🛳️</span>
+        <p><strong>100% Job placement assistance in cruise ships</strong></p>
+      </div>
+      <div class="rci-offer-item"><span>💼</span><p>Paid internship and Job placement assistance</p></div>
+      <div class="rci-offer-item"><span>🏦</span><p>Education bank loan available</p></div>
+      <div class="rci-offer-item"><span>🏠</span><p>Hostel for Boys and Girls</p></div>
+      <div class="rci-offer-item"><span>⏱️</span><p>Part time Job while studying</p></div>
+      <div class="rci-offer-item"><span>👨‍🏫</span><p>Learn from experienced faculty and cruise ship professionals</p></div>
+    </div>
+  </section>
+  
   
   <section class="enroll-section">
     <h1 style="color: #333; text-align: center; margin-bottom: 20px; font-size: 36px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px;" class="">Why enroll in our programs? 🤔</h1>
@@ -161,7 +237,7 @@
       <div class="content-wrapper">
         <div class="left">
           <h1>About Foresight</h1>
-          <p class="subtitle">Start with Hospitality, Graduate with Opportunity</p>
+          <p class="subtitle">Specialized in Cruise Career Training and Placement</p>
         </div>
         <div class="right">
         
@@ -176,11 +252,11 @@
     💬 Chat with us
   </a>
 
-  <section class="academics-section" style="background: url({% static "images/building2.jpg" %}) center center / cover no-repeat; padding: 80px 20px;">
+  <section class="academics-section" style="background: url({% static "images/building3.jpg" %}) center center / cover no-repeat; padding: 80px 20px;">
     <div class="container">
       <div class="academics-header">
         <h2>Our Academics</h2>
-        <p>At Foresight Institute of Hotel Management, we provide a dynamic curriculum that blends practical skills and theoretical knowledge, preparing students to excel in the global hospitality industry.</p>
+        <p style="color:white;">At Foresight Institute of Hotel Management, we provide a dynamic curriculum that blends practical skills and theoretical knowledge, preparing students to excel in the global hospitality industry.</p>
       </div>
   
       <div class="academics-grid" style="display: flex; justify-content: center;">
