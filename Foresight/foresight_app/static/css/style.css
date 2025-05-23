@@ -452,12 +452,29 @@
   }
   
   .registration-form input,
-  .registration-form select,
+  /* .registration-form select, */
   .registration-form textarea {
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 6px;
+  }
+  .registration-form select {
+    width: 100%;  
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  
+  /* 📱 Reduce width on small screens */
+  @media (max-width: 576px) {
+    .registration-form select {
+      max-width: 100%; /* or any desired value like 80% */
+      margin: 0 auto; /* center the select box */
+      display: block;
+    }
   }
   
   .register-btn {

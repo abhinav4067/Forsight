@@ -60,17 +60,28 @@
               <label><input type="radio" name="qualification" value="Plus Two"> Plus Two</label>
               <label><input type="radio" name="qualification" value="Graduation or above"> Graduation or above</label>
             </div>
-            <label>Your Email <span class="admission-required">*</span></label>
-            <input type="email" name="email" placeholder="Your Email" required>
+          
           </div>
-          <div class="admission-field">
-            <label>Course Offered <span class="admission-required">*</span></label>
-            <div class="admission-radio-group">
-              <label><input type="radio" name="course" value="Diploma In Hotel Management" required> Diploma In Hotel Management</label>
-             
+            <div class="admission-field registration-form">
+              <label style="margin-bottom: -2%;" for="course">Course Offered <span class="admission-required">*</span></label>
+              <select id="course" name="course" required>
+                <option value="" disabled selected>Select a course</option>
+                <option value="Hotel and Hospitality Management">Hotel and Hospitality Management</option>
+                <option value="Diploma in Food Production & Culinary Arts">Diploma in Food Production & Culinary Arts</option>
+                <option value="Diploma in Housekeeping Operations">Diploma in Housekeeping Operations</option>
+                <option value="Diploma in Food and Beverage Service">Diploma in Food and Beverage Service</option>
+                <option value="Diploma in Kitchen Supervisor">Diploma in Kitchen Supervisor</option>
+                <option value="Diploma in Front Office Services">Diploma in Front Office Services</option>
+                <option value="Diploma in Kitchen & Area Sanitizing">Diploma in Kitchen & Area Sanitizing</option>
+                <option value="Diploma in USPH & HACCP Compliance">Diploma in USPH & HACCP Compliance</option>
+              </select>
             </div>
-          </div>
+   
+          
+          
         </div>
+        <label>Your Email <span class="admission-required">*</span></label>
+        <input type="email" name="email" placeholder="Your Email" required>
         <div class="admission-form-group full">
             <h3>2. Academic Information</h3>
           </div>
